@@ -1,0 +1,189 @@
+﻿@model BowTie.View.Models.DiagramViewModel
+
+@{
+    ViewBag.Title = "Перегляд діаграми " + Model.EventName;
+}
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/go-debug.js"></script>
+    <script type="text/javascript" src="~/Scripts/diagram.js"></script>
+    <script>
+        var rootNodeId = "@Model.Id"; // Event Id
+        var diagramName = "@Model.EventName"; // Diagram Name
+        var currUser = "@HttpContext.Current.User.Identity.Name";
+        var defaultSave = "@((Model.Saves.Count != 0) ? Model.Saves.First().SaveId : 0)"
+    </script>
+}
+<div class="container body-content">
+    <div class="inside-content">
+        <div style="margin: 20px auto 0px auto; width: 70%;">
+            <table class="table table-bordered table1">
+                <thead class="thead-light">
+                    <tr><th colspan="2">Інформація про діаграму</th></tr>
+                </thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EventName)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.EventName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EventDate)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.EventDate)
+                    </td>
+                </tr>                
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Region)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Region)
+                    </td>
+                </tr>
+                @if (Model.District != null)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.District)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.District)
+                        </td>
+                    </tr>
+                }
+                @if (Model.City != null)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.City)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.City)
+                        </td>
+                    </tr>
+                }
+                @if (Model.Adress != null)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Adress)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.Adress)
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Event)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Event)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExpertCheck)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.ExpertCheck)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Info)
+                    </th>
+                    <td>
+                        <div class="multiline">@Model.Info</div>
+                    </td>
+                </tr>
+            </table>
+</div>
+
+        <div style="position: relative; margin-bottom: 10px;">
+            <div class="diagramcontrols">
+                <div class="controls">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Зберегти</button>
+                    }
+                    <input class="btn btn-success" id="refreshButton" type="button" value="Оновити" />
+                    <a class="btn btn-success" id="downloadButton" href="#" download>Зберегти PNG</a>
+                </div>
+            </div>
+            <div id="myDiagramBowTie" style="height:92vh; width:auto; border: 1px solid;"></div>
+        </div>
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse1">Історія редагувань</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                    <ul class="list-group">
+                        @foreach (var save in Model.Saves)
+                        {
+                            <li class="list-group-item">
+                            <button class="btn btn-success loadButton" id="@save.SaveId" type="button">
+                                @if (save.UserRole == "Експерт"){
+                                <span class="glyphicon glyphicon-ok"></span>
+                                }
+                                 Завантажити
+                            </button>
+                                @if (User.IsInRole("Адміністратор"))
+                                {
+                                    using (Html.BeginForm("DeleteSave", "Diagrams"))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@save.SaveId" />
+                                        <input class="btn btn-danger delButton" id="@save.SaveId" type="submit" value="Видалити" />
+                                    }
+                                }
+                                <p>Дата: <span class="updates">@save.Date</span>, Користувач: <span class="updates">@save.User</span> (<span class="updates">@save.UserRole</span>)</p>
+                                <div class="multiline">@save.Update</div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Зберегти діаграму</h4>
+            </div>
+            <div class="modal-body center">
+                @using (Html.BeginForm("Save", "Diagrams"))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="DiagramId" value="@Model.Id" />
+                    @Html.Hidden("Json","")
+                    <span class="saveheader">Внесені зміни:</span>
+                    <div>
+                        <textarea class="form-control text-box multi-line" id="updText" name="Update" rows="8"></textarea>
+                    </div>
+                    if (User.IsInRole("Експерт") || User.IsInRole("Адміністратор"))
+                    {
+                        <div class="checkbox">
+                            <label class="saveheader">@Html.CheckBox("Checked", (Model.ExpertCheck == "Так" ? true : false))Перевірено експертом</label>
+                        </div>
+                    }
+                    <div class="modal-footer">
+                        <input class="btn btn-success" type="submit" id="saveButton" value="Зберегти" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

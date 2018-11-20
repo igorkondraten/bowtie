@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BowTie.View.Models.UserViewModel>
+
+@{
+    ViewBag.Title = "Список користувачів";
+}
+
+<div class="container body-content">
+    <div class="inside-content">
+        <h2 class="center">Список користувачів</h2>
+
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Role)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            <input type="button" class="btn btn-primary" onclick="location.href='@Url.Action("EditUser", "Admin", new { id = item.Id })'" value="Редагувати" />
+                        </td>
+                    </tr>
+                }
+
+</table>
+        </div>
+</div>

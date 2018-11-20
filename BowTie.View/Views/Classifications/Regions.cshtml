@@ -1,0 +1,113 @@
+﻿@model IEnumerable<BowTie.View.Models.RegionViewModel>
+
+@{
+    ViewBag.Title = "Статистика по областям";
+    if (ViewBag.StartYear != null && ViewBag.EndYear != null)
+    {
+        ViewBag.Title += " за " + ViewBag.StartYear.ToString();
+        ViewBag.Title += "-" + ViewBag.EndYear.ToString() + " роки";
+    }
+}
+
+@section Scripts{
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+    @Styles.Render("~/Content/bootstrap-datepicker.css")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#datepicker").datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years"
+            });
+        });
+    </script>
+    <style>
+        .table > tbody > tr > td {
+            padding: 4px;
+        }
+    </style>
+}
+<div class="container body-content">
+    <div class="inside-content">
+
+        <h2 style="text-align: center;">@ViewBag.Title</h2>
+        <div class="yearpicker">
+            <h4 class="center">Виберіть роки</h4>
+            <form method="get" action="/Classifications/Regions">
+                <div class="input-daterange input-group" id="datepicker">
+                    <input type="text" class="input-sm form-control" name="startYear" />
+                    <span class="input-group-addon">до</span>
+                    <input type="text" class="input-sm form-control" name="endYear" />
+                </div>
+                <input type="submit" class="btn btn-success" value="Відправити" />
+                <a href="/Classifications/Regions" type="button" class="btn btn-danger">Відмінити</a>
+            </form>   
+        </div>
+        <table class="table table-bordered table-striped" style="max-width: 500px; margin: 0px auto;">
+            <thead class="thead-light">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Diagrams)
+                    </th>
+                    <th>
+                        Транспортні аварії
+                    </th>
+                    <th>
+                        Пожежі та вибухи
+                    </th>
+                    <th>
+                        Викидання хімічних речовин
+                    </th>
+                    <th>
+                        НС через перевищення ГДК
+                    </th>
+                    <th>
+                        Викидання радіоактивних речовин
+                    </th>
+                    <th>
+                        Руйнування будівель
+                    </th>
+                    <th>
+                        Аварії у електро-<br />енергетичних системах
+                    </th>
+                    <th>
+                        Аварії у системах життєзабезпечення
+                    </th>
+                    <th>
+                        Аварії систем телекомунікацій
+                    </th>
+                    <th>
+                        Аварії на очисних спорудах
+                    </th>
+                    <th>
+                        Гідродинамічні аварії
+                    </th>
+                    <th>
+                        Аварії у нафтогазовій промисловості
+                    </th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td class="align-middle">
+                        <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Region","Diagrams", new { id = item.Id, startYear = ViewBag.StartYear, endYear = ViewBag.EndYear })'">
+                            Діаграм <span class="badge badge-light">@item.Diagrams</span>
+                        </button>
+                    </td>
+                    @foreach (var s in item.Stats)
+                    {
+                        <td>@s.Count</td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+</div>

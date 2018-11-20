@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowTie.DAL", "BowTie.DAL\BowTie.DAL.csproj", "{297F8EA7-73C2-4A56-8C43-0B0AD55BDFD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowTie.BLL", "BowTie.BLL\BowTie.BLL.csproj", "{3847D49A-CC45-4499-BCFE-724C997D81AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowTie.View", "BowTie.View\BowTie.View.csproj", "{307E576B-66ED-464A-A62C-87695E60B9E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{297F8EA7-73C2-4A56-8C43-0B0AD55BDFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{297F8EA7-73C2-4A56-8C43-0B0AD55BDFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{297F8EA7-73C2-4A56-8C43-0B0AD55BDFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{297F8EA7-73C2-4A56-8C43-0B0AD55BDFD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3847D49A-CC45-4499-BCFE-724C997D81AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3847D49A-CC45-4499-BCFE-724C997D81AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3847D49A-CC45-4499-BCFE-724C997D81AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3847D49A-CC45-4499-BCFE-724C997D81AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{307E576B-66ED-464A-A62C-87695E60B9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{307E576B-66ED-464A-A62C-87695E60B9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{307E576B-66ED-464A-A62C-87695E60B9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{307E576B-66ED-464A-A62C-87695E60B9E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

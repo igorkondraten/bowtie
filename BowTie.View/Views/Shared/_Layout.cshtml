@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/style.css")
+    @Styles.Render("~/Content/animate.min.css")
+    @Styles.Render("~/Content/ken-burns.css")
+    @Styles.Render("~/Content/smoothbox.css")
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <!--header-->
+    <div class="header">
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="navbar-brand">
+                            <h1><a href="/">Bow-Tie <span>Risk Analysis</span></a></h1>
+                        </div>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <nav class="link-effect-2" id="link-effect-2">
+                            <ul class="nav navbar-nav">
+                                <li><a href="/"><span data-hover="Головна">Головна</span></a></li>
+                                <li><a href="/Diagrams/Add"><span data-hover="Створити діаграму">Створити діаграму</span></a></li>
+                                <li><a href="/Classifications/Types"><span data-hover="Класифікатор НС">Класифікатор НС</span></a></li>
+                                <li><a href="/Classifications/Regions"><span data-hover="Статистика по областям">Статистика по областям</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="loginbox">
+        @if (Request.IsAuthenticated)
+        {
+            @:Ви увійшли як <span class="span-bold">@HttpContext.Current.User.Identity.Name</span> | Група: @Roles.GetRolesForUser()[0] | 
+            if (User.IsInRole("Адміністратор"))
+            { 
+                @:<span class="span-bold"><a href="/Admin/Users/">Редагування користувачів</a></span> |
+            } 
+            <span class="span-bold"><a href="/Account/Logoff/">Вихід</a></span>
+        } else
+        {
+            @:Ви не увійшли до системи  |  <a href="/Account/Login">Вхід</a>  |  <a href="/Account/Register">Реєстрація</a>
+        }
+    </div>
+    
+    <!--header-->
+    @RenderBody()
+    <!---copy--->
+    <div class="copy-section">
+        <div class="container">
+            <p>Виконав студент групи ТМ-41 - Кондратенко Ігор | Консультант - доцент Караєва Н.В.</p> 
+            <p>Кафедра автоматизації проектування енергетичних процесів та систем - <a href="http://apeps.kpi.ua/">apeps.kpi.ua</a></p>
+        </div>
+    </div>
+    <!---copy--->
+</body>
+</html>
