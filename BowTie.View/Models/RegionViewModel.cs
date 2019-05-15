@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using BowTie.BLL.DTO;
 
 namespace BowTie.View.Models
 {
@@ -15,12 +13,6 @@ namespace BowTie.View.Models
         public int Diagrams { get; set; }
         public int startYear { get; set; }
         public int endYear { get; set; }
-        public List<TypeStats> Stats { get; set; }
-    }
-
-    public class TypeStats
-    {
-        public string Name { get; set; }
-        public int Count { get; set; }
+        public List<Stats> Stats { get; set; }
     }
 }

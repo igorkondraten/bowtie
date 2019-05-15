@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using BowTie.View.Models;
 using BowTie.BLL.DTO;
-using BowTie.BLL.Services;
 using BowTie.BLL.Interfaces;
 using System.Net;
 
@@ -13,7 +11,12 @@ namespace BowTie.View.Controllers
 {
     public class AdminController : Controller
     {
-        IUserService service = new UsersService();
+        private readonly IUserService _userService;
+
+        public AdminController(IUserService userService)
+        {
+            _userService = userService;
+        }
 
         [Authorize(Roles = "Адміністратор")]
         public ActionResult Users()
@@ -21,7 +24,7 @@ namespace BowTie.View.Controllers
             IEnumerable<UserViewModel> model;
             try
             {
-                model = service.GetUsers().Select(u => new UserViewModel() { Id = u.Id, Name = u.Name, Role = u.Role.Name, Email = u.Email });
+                model = _userService.GetUsers().Select(u => new UserViewModel() { Id = u.Id, Name = u.Name, Role = u.Role.Name, Email = u.Email });
             }
             catch (Exception e)
             {
@@ -42,7 +45,7 @@ namespace BowTie.View.Controllers
             UserDTO user;
             try
             {
-                user = service.GetUser(id.Value);
+                user = _userService.GetUser(id.Value);
             }
             catch (ArgumentException e)
             {
@@ -55,7 +58,7 @@ namespace BowTie.View.Controllers
             IEnumerable<RoleDTO> roles;
             try
             {
-                roles = service.GetRoles().ToList();
+                roles = _userService.GetRoles().ToList();
             }
             catch (Exception e)
             {
@@ -73,9 +76,16 @@ namespace BowTie.View.Controllers
             {
                 try
                 {
-                    service.EditUser(model.RoleId, model.Id, model.Name, model.Email, model.Password);
-                    // Якщо користувач змінює своє ім'я, виконати вихід з аккаунту для оновлення cookie
-                    if (service.GetUser(HttpContext.User.Identity.Name) == null)
+                    var newUser = new UserDTO()
+                    {
+                        Name = model.Name,
+                        Password = model.Password,
+                        Email = model.Email,
+                        RoleId = model.RoleId,
+                        Id = model.Id
+                    };
+                    _userService.EditUser(newUser);
+                    if (_userService.GetUser(HttpContext.User.Identity.Name) == null)
                     {
                         return RedirectToAction("Logoff", "Account");
                     }
@@ -89,7 +99,7 @@ namespace BowTie.View.Controllers
             IEnumerable<RoleDTO> roles;
             try
             {
-                roles = service.GetRoles().ToList();
+                roles = _userService.GetRoles().ToList();
             }
             catch (Exception e)
             {

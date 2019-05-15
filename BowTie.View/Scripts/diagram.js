@@ -393,9 +393,11 @@ window.onload = function init() {
           $(go.Link,  // the whole link panel
             { selectable: false },
             new go.Binding("routing", "routing"),
-            $(go.Shape));  // the link shape
+                $(go.Shape));  // the link shape
 
-        LoadDiagram(defaultSave);
+        jQuery.getJSON("/api/GetLastUpdateId/" + diagramBowTieId, {}, function (json) {
+            LoadDiagram(json.Id);
+        });
     }
 
     initFishBone();

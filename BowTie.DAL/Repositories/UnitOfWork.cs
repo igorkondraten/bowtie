@@ -1,128 +1,65 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BowTie.DAL.Interfaces;
-using BowTie.DAL.Repositories;
-using BowTie.DAL.EF;
+using BowTie.DAL.Interfaces.Repositories;
 
 namespace BowTie.DAL.Repositories
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private BowTieContext db = new BowTieContext();
-        private IDiagramRepository diagramRepository;
-        private IEventTypeRepository eventTypeRepository;
-        private IRegionRepository regionRepository;
-        private ICityRepository cityRepository;
-        private IDistrictRepository districtRepository;
-        private IPlaceRepository placeRepository;
-        private IRoleRepository roleRepository;
-        private ISaveRepository saveRepository;
-        private IUserRepository userRepository;
-        public IDiagramRepository Diagrams
+        private readonly IDataContext _context;
+        private IEventRepository _eventRepository;
+        private IEventTypeRepository _eventTypeRepository;
+        private IRegionRepository _regionRepository;
+        private ICityRepository _cityRepository;
+        private IDistrictRepository _districtRepository;
+        private IPlaceRepository _placeRepository;
+        private IRoleRepository _roleRepository;
+        private ISavedDiagramRepository _savedDiagramRepository;
+        private IUserRepository _userRepository;
+        private IDiagramUpdateRepository _diagramUpdateRepository;
+        private IArticleRepository _articleRepository;
+
+        public IArticleRepository Articles => _articleRepository ?? (_articleRepository = new ArticleRepository(_context));
+        public ICityRepository Cities => _cityRepository ?? (_cityRepository = new CityRepository(_context));
+        public IDiagramUpdateRepository DiagramUpdates => _diagramUpdateRepository ?? (_diagramUpdateRepository = new DiagramUpdateRepository(_context));
+        public IDistrictRepository Districts => _districtRepository ?? (_districtRepository = new DistrictRepository(_context));
+        public IEventRepository Events => _eventRepository ?? (_eventRepository = new EventRepository(_context));
+        public IEventTypeRepository EventTypes => _eventTypeRepository ?? (_eventTypeRepository = new EventTypeRepository(_context));
+        public IPlaceRepository Places => _placeRepository ?? (_placeRepository = new PlaceRepository(_context));
+        public IRegionRepository Regions => _regionRepository ?? (_regionRepository = new RegionRepository(_context));
+        public IRoleRepository Roles => _roleRepository ?? (_roleRepository = new RoleRepository(_context));
+        public ISavedDiagramRepository SavedDiagrams => _savedDiagramRepository ?? (_savedDiagramRepository = new SavedDiagramRepository(_context));
+        public IUserRepository Users => _userRepository ?? (_userRepository = new UserRepository(_context));
+
+        public UnitOfWork(IDataContext context)
         {
-            get
-            {
-                if (diagramRepository == null)
-                    diagramRepository = new DiagramRepository(db);
-                return diagramRepository;
-            }
-        }
-        public IEventTypeRepository EventTypes
-        {
-            get
-            {
-                if (eventTypeRepository == null)
-                    eventTypeRepository = new EventTypeRepository(db);
-                return eventTypeRepository;
-            }
-        }
-        public IRegionRepository Regions
-        {
-            get
-            {
-                if (regionRepository == null)
-                    regionRepository = new RegionRepository(db);
-                return regionRepository;
-            }
-        }
-        public ICityRepository Cities
-        {
-            get
-            {
-                if (cityRepository == null)
-                    cityRepository = new CityRepository(db);
-                return cityRepository;
-            }
-        }
-        public IDistrictRepository Districts
-        {
-            get
-            {
-                if (districtRepository == null)
-                    districtRepository = new DistrictRepository(db);
-                return districtRepository;
-            }
-        }
-        public IPlaceRepository Places
-        {
-            get
-            {
-                if (placeRepository == null)
-                    placeRepository = new PlaceRepository(db);
-                return placeRepository;
-            }
-        }
-        public IRoleRepository Roles
-        {
-            get
-            {
-                if (roleRepository == null)
-                    roleRepository = new RoleRepository(db);
-                return roleRepository;
-            }
-        }
-        public ISaveRepository Saves
-        {
-            get
-            {
-                if (saveRepository == null)
-                    saveRepository = new SaveRepository(db);
-                return saveRepository;
-            }
-        }
-        public IUserRepository Users
-        {
-            get
-            {
-                if (userRepository == null)
-                    userRepository = new UserRepository(db);
-                return userRepository;
-            }
-        }
-        public void Save()
-        {
-            db.SaveChanges();
+            _context = context;
         }
 
-        private bool disposed = false;
-        public virtual void Dispose(bool disposing)
+        public void Save()
         {
-            if (!this.disposed)
+            _context.SaveChanges();
+        }
+
+        #region IDisposable Support
+        private bool _isDisposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_isDisposed)
             {
                 if (disposing)
                 {
-                    db.Dispose();
+                    _context?.Dispose();
                 }
-                this.disposed = true;
+                _isDisposed = true;
             }
         }
+
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
+        #endregion
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using BowTie.View.Filters;
 
 namespace BowTie.View
 {
@@ -8,6 +8,7 @@ namespace BowTie.View
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new ExceptionFilter());
         }
     }
 }

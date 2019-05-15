@@ -12,66 +12,78 @@
     @Styles.Render("~/Content/animate.min.css")
     @Styles.Render("~/Content/ken-burns.css")
     @Styles.Render("~/Content/smoothbox.css")
+
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
     @RenderSection("scripts", required: false)
 </head>
 <body>
-    <!--header-->
-    <div class="header">
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <div class="navbar-brand">
-                            <h1><a href="/">Bow-Tie <span>Risk Analysis</span></a></h1>
-                        </div>
-                    </div>
+    <div style="min-height: 86vh;">
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <nav class="link-effect-2" id="link-effect-2">
-                            <ul class="nav navbar-nav">
-                                <li><a href="/"><span data-hover="Головна">Головна</span></a></li>
-                                <li><a href="/Diagrams/Add"><span data-hover="Створити діаграму">Створити діаграму</span></a></li>
-                                <li><a href="/Classifications/Types"><span data-hover="Класифікатор НС">Класифікатор НС</span></a></li>
-                                <li><a href="/Classifications/Regions"><span data-hover="Статистика по областям">Статистика по областям</span></a></li>
-                            </ul>
-                        </nav>
-                    </div>
+        <nav class="navbar navbar-expand-lg navbar-dark shadow" style="background-color: #49872E;">
+            <a class="navbar-brand mb-0 h1" href="/">Risk analysis</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Головна</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Events/Add">Додати подію</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Classifications/Types">Класифікатор НС</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Classifications/Regions">Статистика по областям</a>
+                    </li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Адміністратор"))
+                        {
+                            @:
+                            <li class="nav-item"><a class="nav-link" href="/Admin/Users/">Редагування користувачів</a></li>
+                        }
+                    }
+                </ul>
+                @if (Request.IsAuthenticated)
+                {
+                    @*@:Ви увійшли як
+                        <span class="span-bold ml-1">@HttpContext.Current.User.Identity.Name</span>*@
+                    <a href="/Account/Logoff/" class="btn btn-success ml-1">Вихід</a>
+                }
+                else
+                {
+                    <a href="/Account/Login/" class="btn btn-success ml-1">Вхід</a>
+                    <a href="/Account/Register/" class="btn btn-success ml-1">Реєстрація</a>
+                }
+
+
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="card border-0 shadow my-5">
+                <div class="card-body p-4">
+                    @RenderBody()
                 </div>
-            </nav>
+            </div>
         </div>
     </div>
-    <div class="loginbox">
-        @if (Request.IsAuthenticated)
-        {
-            @:Ви увійшли як <span class="span-bold">@HttpContext.Current.User.Identity.Name</span> | Група: @Roles.GetRolesForUser()[0] | 
-            if (User.IsInRole("Адміністратор"))
-            { 
-                @:<span class="span-bold"><a href="/Admin/Users/">Редагування користувачів</a></span> |
-            } 
-            <span class="span-bold"><a href="/Account/Logoff/">Вихід</a></span>
-        } else
-        {
-            @:Ви не увійшли до системи  |  <a href="/Account/Login">Вхід</a>  |  <a href="/Account/Register">Реєстрація</a>
-        }
-    </div>
-    
-    <!--header-->
-    @RenderBody()
-    <!---copy--->
-    <div class="copy-section">
-        <div class="container">
-            <p>Виконав студент групи ТМ-41 - Кондратенко Ігор | Консультант - доцент Караєва Н.В.</p> 
-            <p>Кафедра автоматизації проектування енергетичних процесів та систем - <a href="http://apeps.kpi.ua/">apeps.kpi.ua</a></p>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow" style="background-color: #49872E;">
+        <div class="container justify-content-center">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                    <p>Виконав студент групи ТМ-81мп - Кондратенко Ігор; Керівник - доцент Караєва Н.В.</p>
+                    <p class="h6">Кафедра автоматизації проектування енергетичних процесів та систем - <a class="text-light" href="http://apeps.kpi.ua/">apeps.kpi.ua</a></p>
+                </div>
+            </div>
+
         </div>
-    </div>
-    <!---copy--->
+    </nav>
+
 </body>
 </html>

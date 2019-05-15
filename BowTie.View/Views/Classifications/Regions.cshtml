@@ -98,7 +98,7 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td class="align-middle">
-                        <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Region","Diagrams", new { id = item.Id, startYear = ViewBag.StartYear, endYear = ViewBag.EndYear })'">
+                        <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Region","Events", new { id = item.Id, startYear = ViewBag.StartYear, endYear = ViewBag.EndYear })'">
                             Діаграм <span class="badge badge-light">@item.Diagrams</span>
                         </button>
                     </td>

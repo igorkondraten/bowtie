@@ -1,43 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BowTie.View.Models;
 using BowTie.BLL.DTO;
-using BowTie.BLL.Services;
 using BowTie.BLL.Interfaces;
 
 namespace BowTie.View.Controllers
 {
     public class SavesController : ApiController
     {
-        IBowTieService service = new BowTieService();
+        private readonly IDiagramUpdateService _diagramUpdateService;
+
+        public SavesController(IDiagramUpdateService diagramUpdateService)
+        {
+            _diagramUpdateService = diagramUpdateService;
+        }
 
         [HttpGet]
-        [ResponseType(typeof(SaveData))]
-        public IHttpActionResult GetSave(int id)
+        [ResponseType(typeof(DiagramUpdateViewModel))]
+        public IHttpActionResult GetUpdate(int id)
         {
-            SaveDTO save;
+            DiagramUpdateDTO save;
             try
             {
-                save = service.GetSave(id);
+                save = _diagramUpdateService.GetDiagramUpdate(id);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return InternalServerError();
+                return InternalServerError(e);
             }
-            SaveData @json = new SaveData();
+            DiagramUpdateViewModel model = new DiagramUpdateViewModel();
             if (save != null)
             {
-                @json = new SaveData() { Json = save.JsonDiagram, Name = save.Diagram.EventName, DiagramId = save.DiagramId };
+                model = new DiagramUpdateViewModel() { JsonDiagram = save.JsonDiagram, EventName = save.SavedDiagram.Event.EventName, SavedDiagramId = save.SavedDiagramId };
             }
-            return Ok(@json);
+            return Ok(model);
+        }
+
+        [HttpGet]
+        [ResponseType(typeof(DiagramUpdateViewModel))]
+        public IHttpActionResult GetLastUpdateId(int savedDiagramId)
+        {
+            List<DiagramUpdateDTO> saves;
+            try
+            {
+                saves = _diagramUpdateService.GetUpdatesForDiagram(savedDiagramId).ToList();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+            if (saves.Count == 0)
+                return Ok(new { Id = 0 });
+            return Ok(new { Id = saves.FirstOrDefault().Id });
         }
     }
 }

@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
-using BowTie.DAL.EF;
 using BowTie.DAL.Domain;
 using BowTie.DAL.Interfaces;
+using BowTie.DAL.Interfaces.Repositories;
+using System.Linq.Expressions;
 
 namespace BowTie.DAL.Repositories
 {
     public class RegionRepository : IRegionRepository
     {
-        private BowTieContext db;
-        public RegionRepository(BowTieContext context)
+        private readonly IDataContext db;
+
+        public RegionRepository(IDataContext context)
         {
-            this.db = context;
+            db = context;
         }
 
         public IEnumerable<Region> GetAll()
         {
-            return db.Regions;
+            return db.Set<Region>().ToList();
         }
 
         public Region Get(int id)
         {
-            return db.Regions.SingleOrDefault(d => d.Id == id);
+            return db.Set<Region>().SingleOrDefault(d => d.Id == id);
         }
 
         public void Create(Region item)
         {
-            db.Regions.Add(item);
+            db.Set<Region>().Add(item);
         }
 
         public void Update(Region item)
@@ -40,9 +40,14 @@ namespace BowTie.DAL.Repositories
 
         public void Delete(int id)
         {
-            Region Region = db.Regions.Find(id);
+            Region Region = db.Set<Region>().Find(id);
             if (Region != null)
-                db.Regions.Remove(Region);
+                db.Set<Region>().Remove(Region);
+        }
+
+        public IEnumerable<Region> Find(Expression<Func<Region, bool>> expression)
+        {
+            return db.Set<Region>().Where(expression).ToList();
         }
     }
 }

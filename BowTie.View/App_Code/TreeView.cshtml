@@ -1,9 +1,9 @@
-﻿@helper GetTreeView(List<BowTie.View.Models.EventViewModel> events, int parentID)
+﻿@helper GetTreeView(List<BowTie.View.Models.EventTypeViewModel> events, int parentID)
 {
 foreach (var i in events.Where(a => a.ParentId.Equals(parentID)))
 {
         <li>
-            @{var subevent = events.Where(a => a.ParentId.Equals(i.Code)).Count();}
+            @{var subevent = events.Count(a => a.ParentId.Equals(i.Code));}
             @if (subevent > 0)
             {
                 <span class="collapse1 collapsible">&nbsp;</span>
@@ -14,7 +14,7 @@ foreach (var i in events.Where(a => a.ParentId.Equals(parentID)))
             }
             <span class="classificator">
                 <b>@i.Code</b> @i.Name
-                <button type="button" class="btn btn-success btn1" onclick="location.href='/Diagrams/Event/@i.Code'">
+                <button type="button" class="btn btn-success btn1" onclick="location.href='/Events/Event/@i.Code'">
                     Діаграм <span class="badge badge-light badge1">@i.Diagrams</span>
                 </button>
             </span>

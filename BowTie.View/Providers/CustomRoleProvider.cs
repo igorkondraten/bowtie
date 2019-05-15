@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using BowTie.View.Models;
 using System.Web.Security;
-using BowTie.BLL.DTO;
 using BowTie.BLL.Interfaces;
-using BowTie.BLL.Services;
+using Ninject;
 
 namespace BowTie.View.Providers
 {
     public class CustomRoleProvider : RoleProvider
     {
-        private IUserService db = new UsersService();
+        public IUserService db { get; set; }
+
         public override string ApplicationName
         {
             get
@@ -53,7 +50,11 @@ namespace BowTie.View.Providers
 
         public override string[] GetRolesForUser(string username)
         {
-            return db.GetRolesForUser(username);
+            using (var scope = System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver.BeginScope())
+            {
+                db = scope.GetService(typeof(IUserService)) as IUserService;
+                return db.GetRolesForUser(username).ToArray();
+            }
         }
 
         public override string[] GetUsersInRole(string roleName)
@@ -63,16 +64,20 @@ namespace BowTie.View.Providers
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            bool result = false;
-            try
+            using (var scope = System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver.BeginScope())
             {
-                result = db.IsUserInRole(username, roleName);
+                db = scope.GetService(typeof(IUserService)) as IUserService;
+                bool result = false;
+                try
+                {
+                    result = db.IsUserInRole(username, roleName);
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+                return result;
             }
-            catch (Exception e)
-            {
-                return false;
-            }
-            return result;
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)

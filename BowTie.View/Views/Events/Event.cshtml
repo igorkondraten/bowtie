@@ -1,0 +1,105 @@
+﻿@model IEnumerable<BowTie.View.Models.EventViewModel>
+@{
+    ViewBag.Title = ViewBag.Name + " - список діаграм";
+}
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnCreate").click(function () {
+                window.location.href = "@Url.Action("Add", "Events", new { id = ViewBag.Code })";
+            });
+        });
+    </script>
+    <style>
+        h3 {
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+        }
+    </style>
+}
+<div class="container body-content">
+    <div class="inside-content">
+        <h2>@ViewBag.Code @ViewBag.Name</h2>
+        <h3>Список діаграм</h3>
+
+        <p>
+            <div class="form-row text-center">
+                <div class="col-12">
+                    <input type="button" class="btn btn-success" id="btnCreate" value="Створити нову" />
+                </div>
+            </div>
+        </p>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.EventDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EventName)
+                    </th>>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Region)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.District)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.City)
+                    </th>
+                    <th>Дії</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.EventDate)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.EventName)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Region)
+                    </td>
+                    <td class="align-middle">
+                        @if (item.District != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.District);
+                        }
+                        else
+                        {
+                            @:-
+                        }
+                    </td>
+                    <td class="align-middle">
+                        @if (item.City != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.City);
+                        }
+                        else
+                        {
+                            @:-
+                        }
+                    </td>
+                    <td class="align-middle">
+                        @if (Request.IsAuthenticated)
+                        {
+                            <input type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Events", new { id = item.Id })'" value="Редагувати" />
+                        }
+                        <input type="button" class="btn btn-info" onclick="location.href='@Url.Action("View", "Events", new { id = item.Id })'" value="Переглянути" />
+                        @if (User.IsInRole("Адміністратор"))
+                        {
+                            <input type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "Events", new { id = item.Id })'" value="Видалити" />
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

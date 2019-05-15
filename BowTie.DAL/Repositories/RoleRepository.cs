@@ -1,36 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using BowTie.DAL.EF;
 using BowTie.DAL.Domain;
 using BowTie.DAL.Interfaces;
+using BowTie.DAL.Interfaces.Repositories;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace BowTie.DAL.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
-        private BowTieContext db;
-        public RoleRepository(BowTieContext context)
+        private readonly IDataContext db;
+
+        public RoleRepository(IDataContext context)
         {
-            this.db = context;
+            db = context;
         }
 
         public IEnumerable<Role> GetAll()
         {
-            return db.Roles;
+            return db.Set<Role>().ToList();
         }
 
         public Role Get(int id)
         {
-            return db.Roles.Find(id);
+            return db.Set<Role>().Find(id);
         }
 
         public void Create(Role item)
         {
-            db.Roles.Add(item);
+            db.Set<Role>().Add(item);
         }
 
         public void Update(Role item)
@@ -40,9 +40,14 @@ namespace BowTie.DAL.Repositories
 
         public void Delete(int id)
         {
-            Role role = db.Roles.Find(id);
+            Role role = db.Set<Role>().Find(id);
             if (role != null)
-                db.Roles.Remove(role);
+                db.Set<Role>().Remove(role);
+        }
+
+        public IEnumerable<Role> Find(Expression<Func<Role, bool>> expression)
+        {
+            return db.Set<Role>().Where(expression).ToList();
         }
     }
 }

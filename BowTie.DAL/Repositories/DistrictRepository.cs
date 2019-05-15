@@ -1,41 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
-using BowTie.DAL.EF;
 using BowTie.DAL.Domain;
 using BowTie.DAL.Interfaces;
+using BowTie.DAL.Interfaces.Repositories;
+using System.Linq.Expressions;
 
 namespace BowTie.DAL.Repositories
 {
     public class DistrictRepository : IDistrictRepository
     {
-        private BowTieContext db;
-        public DistrictRepository(BowTieContext context)
+        private readonly IDataContext db;
+
+        public DistrictRepository(IDataContext context)
         {
-            this.db = context;
+            db = context;
         }
 
         public IEnumerable<District> GetAll()
         {
-            return db.Districts.Include(d => d.Region);
+            return db.Set<District>().ToList();
         }
 
         public District Get(int id)
         {
-            return db.Districts.Include(d => d.Region).SingleOrDefault(d => d.Id == id);
-        }
-
-        public IEnumerable<District> GetByRegion(int regionId)
-        {
-            return db.Districts.Where(d => d.RegionId == regionId);
+            return db.Set<District>().SingleOrDefault(d => d.Id == id);
         }
 
         public void Create(District item)
         {
-            db.Districts.Add(item);
+            db.Set<District>().Add(item);
         }
 
         public void Update(District item)
@@ -45,9 +40,14 @@ namespace BowTie.DAL.Repositories
 
         public void Delete(int id)
         {
-            District district = db.Districts.Find(id);
+            District district = db.Set<District>().Find(id);
             if (district != null)
-                db.Districts.Remove(district);
+                db.Set<District>().Remove(district);
+        }
+
+        public IEnumerable<District> Find(Expression<Func<District, bool>> expression)
+        {
+            return db.Set<District>().Where(expression).ToList();
         }
     }
 }

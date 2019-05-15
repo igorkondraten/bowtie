@@ -1,40 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
-using BowTie.DAL.EF;
 using BowTie.DAL.Domain;
 using BowTie.DAL.Interfaces;
+using BowTie.DAL.Interfaces.Repositories;
+using System.Linq.Expressions;
 
 namespace BowTie.DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private BowTieContext db;
-        public UserRepository(BowTieContext context)
+        private readonly IDataContext db;
+
+        public UserRepository(IDataContext context)
         {
-            this.db = context;
+            db = context;
         }
 
         public IEnumerable<User> GetAll()
         {
-            return db.Users.Include(d => d.Role);
+            return db.Set<User>().ToList();
         }
 
         public User Get(int id)
         {
-            return db.Users.Include(d => d.Role).SingleOrDefault(d => d.Id == id);
-        }
-        public User Get(string name)
-        {
-            return db.Users.Include(d => d.Role).SingleOrDefault(d => d.Name == name);
+            return db.Set<User>().SingleOrDefault(d => d.Id == id);
         }
 
         public void Create(User item)
         {
-            db.Users.Add(item);
+            db.Set<User>().Add(item);
         }
 
         public void Update(User item)
@@ -44,9 +40,14 @@ namespace BowTie.DAL.Repositories
 
         public void Delete(int id)
         {
-            User user = db.Users.Find(id);
+            User user = db.Set<User>().Find(id);
             if (user != null)
-                db.Users.Remove(user);
+                db.Set<User>().Remove(user);
+        }
+
+        public IEnumerable<User> Find(Expression<Func<User, bool>> expression)
+        {
+            return db.Set<User>().Where(expression).ToList();
         }
     }
 }

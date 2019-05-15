@@ -1,0 +1,58 @@
+﻿@model BowTie.View.Models.EventViewModel
+
+    @{
+        ViewBag.Title = "Видалення запису";
+    }
+
+
+    <div class="container body-content">
+        <div class="inside-content">
+            <h3>Ви дійсно хочете видалити запис?</h3>
+            <div>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EventDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.EventDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EventName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.EventName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Region)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Region)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Event)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Event)
+                    </dd>
+                </dl>
+                <hr />
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Видалити" class="btn btn-success" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>

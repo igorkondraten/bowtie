@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BowTie.BLL</RootNamespace>
     <AssemblyName>BowTie.BLL</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.3.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.3.1\lib\net45\Ninject.Web.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Security" />
@@ -43,35 +53,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\ArticleDTO.cs" />
     <Compile Include="DTO\CityDTO.cs" />
-    <Compile Include="DTO\DiagramDTO.cs" />
+    <Compile Include="DTO\DiagramUpdateDTO.cs" />
+    <Compile Include="DTO\EventDTO.cs" />
     <Compile Include="DTO\DistrictDTO.cs" />
     <Compile Include="DTO\EventTypeDTO.cs" />
     <Compile Include="DTO\PlaceDTO.cs" />
     <Compile Include="DTO\RegionDTO.cs" />
     <Compile Include="DTO\RoleDTO.cs" />
-    <Compile Include="DTO\SaveDTO.cs" />
+    <Compile Include="DTO\SavedDiagramDTO.cs" />
+    <Compile Include="DTO\Stats.cs" />
     <Compile Include="DTO\UserDTO.cs" />
-    <Compile Include="Interfaces\IBowTieService.cs" />
+    <Compile Include="Exceptions\ValidationException.cs" />
+    <Compile Include="Infrastructure\AutoMapperConfiguration.cs" />
+    <Compile Include="Infrastructure\NinjectBLLModule.cs" />
+    <Compile Include="Infrastructure\MapperProfile.cs" />
+    <Compile Include="Interfaces\IArticleService.cs" />
+    <Compile Include="Interfaces\IStatsService.cs" />
+    <Compile Include="Interfaces\ICityService.cs" />
+    <Compile Include="Interfaces\IDiagramUpdateService.cs" />
+    <Compile Include="Interfaces\IDistrictService.cs" />
+    <Compile Include="Interfaces\IEventService.cs" />
+    <Compile Include="Interfaces\IEventTypeService.cs" />
+    <Compile Include="Interfaces\IRegionService.cs" />
+    <Compile Include="Interfaces\ISavedDiagramService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Mappers\CityMapper.cs" />
-    <Compile Include="Mappers\DiagramMapper.cs" />
-    <Compile Include="Mappers\DistrictMapper.cs" />
-    <Compile Include="Mappers\EventTypeMapper.cs" />
-    <Compile Include="Mappers\PlaceMapper.cs" />
-    <Compile Include="Mappers\RegionMapper.cs" />
-    <Compile Include="Mappers\RoleMapper.cs" />
-    <Compile Include="Mappers\SaveMapper.cs" />
-    <Compile Include="Mappers\UserMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BowTieService.cs" />
-    <Compile Include="Services\UsersService.cs" />
+    <Compile Include="Services\ArticleService.cs" />
+    <Compile Include="Services\DistrictService.cs" />
+    <Compile Include="Services\CityService.cs" />
+    <Compile Include="Services\DiagramUpdateService.cs" />
+    <Compile Include="Services\EventService.cs" />
+    <Compile Include="Services\EventTypeService.cs" />
+    <Compile Include="Services\RegionService.cs" />
+    <Compile Include="Services\SavedDiagramService.cs" />
+    <Compile Include="Services\StatsService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BowTie.DAL\BowTie.DAL.csproj">
       <Project>{297f8ea7-73c2-4a56-8c43-0b0ad55bdfd6}</Project>
       <Name>BowTie.DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
-using BowTie.DAL.EF;
 using BowTie.DAL.Domain;
 using BowTie.DAL.Interfaces;
+using BowTie.DAL.Interfaces.Repositories;
+using System.Linq.Expressions;
 
 namespace BowTie.DAL.Repositories
 {
     public class PlaceRepository : IPlaceRepository
     {
-        private BowTieContext db;
-        public PlaceRepository(BowTieContext context)
+        private readonly IDataContext db;
+
+        public PlaceRepository(IDataContext context)
         {
-            this.db = context;
+            db = context;
         }
 
         public IEnumerable<Place> GetAll()
         {
-            return db.Places.Include(d => d.Region).Include(d => d.District).Include(d => d.City);
+            return db.Set<Place>().ToList();
         }
 
         public Place Get(int id)
         {
-            return db.Places.Include(d => d.Region).Include(d => d.District).Include(d => d.City).SingleOrDefault(d => d.Id == id);
+            return db.Set<Place>().SingleOrDefault(d => d.Id == id);
         }
 
         public void Create(Place item)
         {
-            db.Places.Add(item);
+            db.Set<Place>().Add(item);
         }
 
         public void Update(Place item)
@@ -40,9 +40,14 @@ namespace BowTie.DAL.Repositories
 
         public void Delete(int id)
         {
-            Place place = db.Places.Find(id);
+            Place place = db.Set<Place>().Find(id);
             if (place != null)
-                db.Places.Remove(place);
+                db.Set<Place>().Remove(place);
+        }
+
+        public IEnumerable<Place> Find(Expression<Func<Place, bool>> expression)
+        {
+            return db.Set<Place>().Where(expression).ToList();
         }
     }
 }
