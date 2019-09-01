@@ -20,7 +20,7 @@ namespace BowTie.DAL.Repositories
 
         public IEnumerable<Article> GetAll()
         {
-            return db.Set<Article>().ToList();
+            return db.Set<Article>().OrderBy(x => x.Position).ToList();
         }
 
         public Article Get(int id)
@@ -47,7 +47,12 @@ namespace BowTie.DAL.Repositories
 
         public IEnumerable<Article> Find(Expression<Func<Article, bool>> expression)
         {
-            return db.Set<Article>().Where(expression).ToList();
+            return db.Set<Article>().Where(expression).OrderBy(x => x.Position).ToList();
+        }
+
+        public IEnumerable<Article> GetAllTree()
+        {
+            return db.Set<Article>().Where(x => !x.ParentArticleId.HasValue).OrderBy(x => x.Position).ToList();
         }
     }
 }

@@ -32,8 +32,8 @@ namespace BowTie.View.Controllers
                 Updates = data.Updates,
                 UserId = user.Id
             };
-            _diagramUpdateService.CreateDiagramUpdate(diagramUpdate);
-            return RedirectToAction("View", "Events", new { id = diagramUpdate.SavedDiagram.EventId });
+            var createdDiagramUpdate = _diagramUpdateService.CreateDiagramUpdate(diagramUpdate);
+            return RedirectToAction("View", "Events", new { id = createdDiagramUpdate.SavedDiagram.EventId });
         }
 
         [Authorize(Roles = "Адміністратор")]

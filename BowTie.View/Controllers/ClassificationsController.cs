@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using BowTie.BLL.DTO;
 using BowTie.View.Models;
 using BowTie.BLL.Interfaces;
 
@@ -34,17 +36,30 @@ namespace BowTie.View.Controllers
 
         public ActionResult Regions(int? startYear, int? endYear)
         {
-            var all = _regionService.GetRegions(startYear, endYear)
-                .Select(r => new RegionViewModel()
-                {
-                    Id = r.Id,
-                    Name = r.RegionName,
-                    Diagrams = r.EventsCount,
-                    Stats = _statsService.GetStats(r.Id, startYear, endYear).ToList()
-                }).OrderByDescending(r => r.Diagrams).ToList();
             ViewBag.StartYear = startYear;
             ViewBag.EndYear = endYear;
-            return View(all);
+            var all = _regionService.GetRegions(startYear, endYear)
+                .Select(r => new
+                {
+                    Region = r,
+                    Stats = _statsService.GetStats(r.Id, startYear, endYear).Select(x => new Stats()
+                    { Count = x.Count, EventTypeName = x.EventTypeName, Region = r.RegionName }).ToList()
+                }).OrderByDescending(r => r.Region.EventsCount).ToList();
+            var allStats = new List<Stats>();
+            all.ForEach(x => allStats.AddRange(x.Stats));
+            var model = new RegionViewModel();
+            model.Regions = all.Select(x => x.Region).ToList();
+            model.EventStats = allStats.GroupBy(x => x.EventTypeName).Select(x =>
+                new EventStats()
+                {
+                    EventType = x.Key,
+                    Stats = x.Select(z => new Stats()
+                    {
+                        Count = z.Count,
+                        Region = z.Region
+                    }).ToList(),
+                }).ToList();
+            return View(model);
         }
     }
 }

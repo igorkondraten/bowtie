@@ -28,12 +28,14 @@ namespace BowTie.BLL.Services
             db.Save();
         }
 
-        public void CreateDiagramUpdate(DiagramUpdateDTO diagramUpdate)
+        public DiagramUpdateDTO CreateDiagramUpdate(DiagramUpdateDTO diagramUpdate)
         {
             if (!string.IsNullOrEmpty(diagramUpdate.Updates) && diagramUpdate.Updates.Length > 500)
                 throw new ValidationException("Updates length must be less than 500.");
-            db.DiagramUpdates.Create(Mapper.Map<DiagramUpdateDTO, DiagramUpdate>(diagramUpdate));
+            var update = Mapper.Map<DiagramUpdateDTO, DiagramUpdate>(diagramUpdate);
+            db.DiagramUpdates.Create(update);
             db.Save();
+            return Mapper.Map<DiagramUpdateDTO>(db.DiagramUpdates.Get(update.Id));
         }
 
         public IEnumerable<DiagramUpdateDTO> GetUpdatesForDiagram(int savedDiagramId)

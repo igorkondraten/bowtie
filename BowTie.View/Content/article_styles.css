@@ -1,0 +1,129 @@
+.toc {
+    display: inline-block;
+    border: 1px solid #a2a9b1;
+    background-color: #c4e184;
+    padding: 10px;
+    width: 300px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+    .toc h3 {
+        font-size: 1.1em;
+        font-family: serif;
+        margin: 0;
+        margin-bottom: 8px;
+    }
+
+.toctitle {
+    text-align: center;
+}
+
+.toc ol {
+    padding: 0;
+    list-style-position: inside;
+    font-size: 95%;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+h1, h2 {
+    margin-bottom: 0px;
+}
+
+h1 {
+    font-size: 1.8em;
+    margin-top: 0;
+    text-align: center;
+}
+
+h2 {
+    font-weight: normal;
+    font-size: 1.5em;
+    margin-left: 5px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 99%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+td {
+    width: 50%;
+}
+
+th {
+    background-color: #c4e184;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.cambria-font {
+    font-family: Cambria,Georgia,serif;
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.title {
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 1.2em;
+}
+
+#recomendation {
+    font-style: italic;
+    text-align: center;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
+.borderless {
+    border: none !important;
+}
+
+.article-content {
+    float: right;
+    width: 70%;
+    min-height: 40rem;
+    border-radius: .25rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 5px;
+}
+
+.article-content p {
+    text-indent: 25px;
+    text-align: justify;
+}
+
+.article-nav {
+    min-height: 40rem;
+    margin-right: 70.5%;
+    border-radius: .25rem;
+}

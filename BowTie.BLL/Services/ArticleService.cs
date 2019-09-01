@@ -21,6 +21,11 @@ namespace BowTie.BLL.Services
 
         public int CreateArticle(ArticleDTO article)
         {
+            if (article.ParentArticleId.HasValue)
+            {
+                if (db.Articles.Get(article.ParentArticleId.Value) == null)
+                    throw new ValidationException("ParentArticle not found.");
+            }
             var newArticle = Mapper.Map<ArticleDTO, Article>(article);
             db.Articles.Create(newArticle);
             db.Save();
@@ -47,7 +52,7 @@ namespace BowTie.BLL.Services
 
         public IEnumerable<ArticleDTO> GetAllArticles()
         {
-            return db.Articles.GetAll().Select(x => Mapper.Map<Article, ArticleDTO>(x));
+            return db.Articles.GetAllTree().Select(x => Mapper.Map<Article, ArticleDTO>(x));
         }
 
         #region IDisposable Support

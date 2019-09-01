@@ -7,7 +7,7 @@ namespace BowTie.BLL.Interfaces
     public interface IDiagramUpdateService : IDisposable
     {
         void DeleteDiagramUpdate(int id);
-        void CreateDiagramUpdate(DiagramUpdateDTO diagramUpdate);
+        DiagramUpdateDTO CreateDiagramUpdate(DiagramUpdateDTO diagramUpdate);
         IEnumerable<DiagramUpdateDTO> GetUpdatesForDiagram(int savedDiagramId);
         DiagramUpdateDTO GetDiagramUpdate(int diagramUpdateId);
     }

@@ -1,6 +1,6 @@
 ﻿@model BowTie.View.Models.AddEventViewModel
 @{
-    ViewBag.Title = "Створити нову діаграму";
+    ViewBag.Title = "Додати нову подію";
 }
 @section Scripts{
     @Scripts.Render("~/Scripts/bootstrap-select.js")
@@ -13,7 +13,7 @@
             });
             $('#regionsPicker').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
                 var selected = $(e.currentTarget).val();
-                AjaxCall('/Diagrams/GetDistricts', JSON.stringify({ "regionId": selected }), 'POST').done(function (response) {
+                AjaxCall('/Events/GetDistricts', JSON.stringify({ "regionId": selected }), 'POST').done(function (response) {
                     if (response.length > 0) {
                         $("#districtsPicker").html('');
                         $("#citiesPicker").html('');
@@ -33,7 +33,7 @@
 
             $('#districtsPicker').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
                 var selected = $(e.currentTarget).val();
-                AjaxCall('/Diagrams/GetCities', JSON.stringify({ "districtId": selected }), 'POST').done(function (response) {
+                AjaxCall('/Events/GetCities', JSON.stringify({ "districtId": selected }), 'POST').done(function (response) {
                     if (response.length > 0) {
                         $("#citiesPicker").html('');
                         for (var i = 0; i < response.length; i++) {
@@ -72,117 +72,95 @@
         }
     </script>
 }
-<div class="container body-content">
-    <div class="inside-content">
-        <h2 style="text-align: center;">Створити нову діаграму</h2>
+<div class="container">
+    <h3 style="text-align: center;">Додати нову подію</h3>
 
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-horizontal">
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @type = "datetime" } })
-                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.RegionId, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.RegionId, Model.Regions, new
-                   {
-                       @class = "form-control selectpicker",
-                       @id = "regionsPicker",
-                       @data_size = "10",
-                       @title = "Виберіть область"
-                   })
-                        @Html.ValidationMessageFor(model => model.RegionId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group" id="districts"
-                     @if (Model.RegionId == 0) { @: style="display: none;"
-                     }>
-                    @Html.LabelFor(model => model.DistrictId, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.DistrictId, Model.Districts, new
-                   {
-                       @class = "form-control selectpicker",
-                       @id = "districtsPicker",
-                       @data_size = "10",
-                       @title = "Виберіть район"
-                   })
-                        @Html.ValidationMessageFor(model => model.DistrictId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group" id="cities"
-                     @if (!Model.DistrictId.HasValue) { @: style="display: none;"
-                     }>
-                    @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.CityId, Model.Cities, new
-                   {
-                       @class = "form-control selectpicker",
-                       @id = "citiesPicker",
-                       @data_size = "10",
-                       @title = "Виберіть населений пункт"
-                   })
-                        @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EventTypeCode, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.EventTypeCode, Model.EventTypes, new
-                   {
-                       @class = "form-control selectpicker",
-                       @data_size = "10",
-                       @Value = "Надзвичайні події",
-                       @title = "Виберіть тип події із класифікатора"
-                   })
-                        @Html.ValidationMessageFor(model => model.EventTypeCode, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Info, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Info, new { htmlAttributes = new { @class = "form-control", @rows = 12 } })
-                        @Html.ValidationMessageFor(model => model.Info, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-                <div class="form-row text-center">
-                    <div class="col-12">
-                        <input type="submit" value="Створити" class="btn btn-success" />
-                    </div>
-                </div>
+        <div class="form-horizontal text-center">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name)
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
-        }
-    </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Date)
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @type = "datetime" } })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegionId)
+                @Html.DropDownListFor(model => model.RegionId, Model.Regions, new
+                {
+                    @class = "form-control selectpicker",
+                    @id = "regionsPicker",
+                    @data_size = "10",
+                    @title = "Виберіть область"
+                })
+                @Html.ValidationMessageFor(model => model.RegionId, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group" id="districts"
+                 @if (Model.RegionId == 0) { @: style="display: none;"
+                 }>
+                @Html.LabelFor(model => model.DistrictId)
+                @Html.DropDownListFor(model => model.DistrictId, Model.Districts, new
+                {
+                    @class = "form-control selectpicker",
+                    @id = "districtsPicker",
+                    @data_size = "10",
+                    @title = "Виберіть район"
+                })
+                @Html.ValidationMessageFor(model => model.DistrictId, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group" id="cities"
+                 @if (!Model.DistrictId.HasValue) { @: style="display: none;"
+                 }>
+                @Html.LabelFor(model => model.CityId)
+                @Html.DropDownListFor(model => model.CityId, Model.Cities, new
+                {
+                    @class = "form-control selectpicker",
+                    @id = "citiesPicker",
+                    @data_size = "10",
+                    @title = "Виберіть населений пункт"
+                })
+                @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address)
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EventTypeCode)
+                @Html.DropDownListFor(model => model.EventTypeCode, Model.EventTypes, new
+                {
+                    @class = "form-control selectpicker",
+                    @data_size = "10",
+                    @Value = "Надзвичайні події",
+                    @title = "Виберіть тип події із класифікатора"
+                })
+                @Html.ValidationMessageFor(model => model.EventTypeCode, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Info)
+                @Html.EditorFor(model => model.Info, new { htmlAttributes = new { @class = "form-control", @rows = 12 } })
+                @Html.ValidationMessageFor(model => model.Info, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group text-center">
+                <input type="submit" value="Створити" class="btn btn-success" />
+            </div>
+        </div>
+    }
 </div>

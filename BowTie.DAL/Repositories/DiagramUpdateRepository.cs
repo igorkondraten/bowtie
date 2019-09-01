@@ -25,7 +25,7 @@ namespace BowTie.DAL.Repositories
 
         public DiagramUpdate Get(int id)
         {
-            return db.Set<DiagramUpdate>().SingleOrDefault(d => d.Id == id);
+            return db.Set<DiagramUpdate>().Include(x => x.SavedDiagram).SingleOrDefault(d => d.Id == id);
         }
 
         public void Create(DiagramUpdate item)

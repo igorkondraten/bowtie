@@ -6,13 +6,14 @@ namespace BowTie.View.Models
 {
     public class RegionViewModel
     {
-        public int Id { get; set; }
-        [Display(Name = "Область")]
-        public string Name { get; set; }
-        [Display(Name = "Збережено діаграм")]
-        public int Diagrams { get; set; }
-        public int startYear { get; set; }
-        public int endYear { get; set; }
+        public List<RegionDTO> Regions { get; set; }
+        public List<EventStats> EventStats { get; set; }
+    }
+
+    public class EventStats
+    {
+        [Display(Name = "Тип події")]
+        public string EventType { get; set; }
         public List<Stats> Stats { get; set; }
     }
 }

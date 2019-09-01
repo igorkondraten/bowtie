@@ -26,13 +26,16 @@ namespace BowTie.BLL.Services
             foreach (var e in eventTypes)
             {
                 int count = 0;
-                var childEvents = GetChildren(eventTypes, e.Code).Select(ev => ev.Code).ToList();
-                childEvents.Add(e.Code);
-                foreach (var ev in childEvents)
+                if (eventsByRegionYear.Any())
                 {
-                    count += eventsByRegionYear.Count(d => d.EventTypeCode == ev);
+                    var childEvents = GetChildren(eventTypes, e.Code).Select(ev => ev.Code).ToList();
+                    childEvents.Add(e.Code);
+                    foreach (var ev in childEvents)
+                    {
+                        count += eventsByRegionYear.Count(d => d.EventTypeCode == ev);
+                    }
                 }
-                yield return new Stats { Name = e.Name, Count = count };
+                yield return new Stats { EventTypeName = e.Name, Count = count };
             }
 
             IEnumerable<EventType> GetChildren(IEnumerable<EventType> types, int id)

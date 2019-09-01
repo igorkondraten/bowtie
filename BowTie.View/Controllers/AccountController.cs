@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using BowTie.BLL.DTO;
 using BowTie.BLL.Interfaces;
 using System.Web.Security;
+using BowTie.BLL.Exceptions;
 using BowTie.View.Models.AuthModels;
 
 namespace BowTie.View.Controllers
@@ -56,14 +57,13 @@ namespace BowTie.View.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            UserDTO user;
+            UserDTO user = null;
             try
             {
                 user = _userService.GetUser(model.Name);
             }
-            catch (Exception e)
+            catch (ValidationException e)
             {
-                return new HttpStatusCodeResult(500, e.Message);
             }
             if (user != null)
             {

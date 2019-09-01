@@ -1,0 +1,148 @@
+body {
+    font-family: serif;
+    font-size: 1.1em;
+    background-color: #ebf5d6;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+#content {
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline;
+    flex: 1 0 auto;
+    width: 99%;
+}
+
+.toc {
+    display: inline-block;
+    border: 1px solid #a2a9b1;
+    background-color: #c4e184;
+    padding: 10px;
+    width: 220px;
+    margin-left: 5px;
+}
+
+    .toc h3 {
+        font-size: 1.1em;
+        font-family: serif;
+        margin: 0;
+        margin-bottom: 8px;
+    }
+
+.toctitle {
+    text-align: center;
+}
+
+.toc ol {
+    padding: 0;
+    list-style-position: inside;
+    font-size: 95%;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+h1, h2 {
+    margin-bottom: 0px;
+}
+
+h1 {
+    font-size: 1.8em;
+    margin-top: 0;
+}
+
+h2 {
+    font-weight: normal;
+    font-size: 1.5em;
+    margin-left: 5px;
+}
+
+p {
+    text-indent: 25px;
+    margin: 5px;
+    text-align: justify;
+}
+
+table {
+    border-collapse: collapse;
+    width: 99%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+td {
+    width: 50%;
+}
+
+th {
+    background-color: #c4e184;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.footer {
+    border-top: 1px solid;
+    width: 100%;
+    text-align: center;
+    background-color: #c4e184;
+    flex: 0 0 auto;
+    margin-top: 10px;
+}
+
+.cambria-font {
+    font-family: Cambria,Georgia,serif;
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.title {
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 1.2em;
+}
+
+#recomendation {
+    font-style: italic;
+    text-align: center;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
+.borderless {
+    border: none !important;
+}
+
+.copyright-title {
+    font-family: Cambria,Georgia,serif;
+    font-size: 0.9em;
+    text-align: right;
+    width: 650px;
+}

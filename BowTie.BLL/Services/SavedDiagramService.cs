@@ -35,7 +35,7 @@ namespace BowTie.BLL.Services
             return Mapper.Map<SavedDiagram, SavedDiagramDTO>(savedDiagram);
         }
 
-        public int CreateDiagram(SavedDiagramDTO diagram)
+        public int CreateSavedDiagram(SavedDiagramDTO diagram)
         {
             if (diagram.Event == null || db.Events.Get(diagram.EventId) == null)
                 throw new ValidationException("Event not found.");

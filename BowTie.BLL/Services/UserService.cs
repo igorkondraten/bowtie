@@ -76,7 +76,8 @@ namespace BowTie.BLL.Services
             var oldUser = db.Users.Get(user.Id);
             if (oldUser == null)
                 throw new ValidationException("User not found.");
-            Mapper.Map<UserDTO, User>(user, oldUser);
+            oldUser.Email = user.Email;
+            oldUser.RoleId = user.RoleId;
             if (user.Password != null)
                 oldUser.PasswordHash = Crypto.HashPassword(user.Password);
             db.Users.Update(oldUser);

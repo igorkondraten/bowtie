@@ -2,7 +2,7 @@
 {
 foreach (var i in events.Where(a => a.ParentId.Equals(parentID)))
 {
-        <li>
+        <li style="white-space: nowrap">
             @{var subevent = events.Count(a => a.ParentId.Equals(i.Code));}
             @if (subevent > 0)
             {
@@ -15,7 +15,7 @@ foreach (var i in events.Where(a => a.ParentId.Equals(parentID)))
             <span class="classificator">
                 <b>@i.Code</b> @i.Name
                 <button type="button" class="btn btn-success btn1" onclick="location.href='/Events/Event/@i.Code'">
-                    Діаграм <span class="badge badge-light badge1">@i.Diagrams</span>
+                    Подій <span class="badge badge-light badge1">@i.Diagrams</span>
                 </button>
             </span>
             @if (subevent > 0)

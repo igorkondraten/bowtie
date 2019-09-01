@@ -38,7 +38,14 @@ namespace BowTie.DAL.Repositories
 
         public void Save()
         {
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         #region IDisposable Support

@@ -1,0 +1,32 @@
+﻿@model BowTie.View.Models.AddArticleViewModel
+
+<div class="container">
+    <div class="inside-content">
+        <h3 style="text-align: center;">Додати нову сторінку</h3>
+
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(model => model.ParentArticleId)
+
+            <div class="form-horizontal text-center">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name)
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+
+               <div class="form-group">
+                    @Html.LabelFor(model => model.Content)
+                    @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control", @rows = 20 } })
+                    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group text-center">
+                    <input type="submit" value="Створити" class="btn btn-success" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

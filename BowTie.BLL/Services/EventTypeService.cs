@@ -32,6 +32,7 @@ namespace BowTie.BLL.Services
                 for (var i = 0; i < arr.Count; i++)
                 {
                     int subEventCount = e.Count(a => a.ParentCode.Equals(arr[i].Code));
+                    arr[i].TotalEventsCount = arr[i].Events.Count();
                     if (subEventCount > 0)
                     {
                         int c = GetTreeSum(e, arr[i].Code);

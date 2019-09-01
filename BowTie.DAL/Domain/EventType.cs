@@ -10,6 +10,7 @@ namespace BowTie.DAL.Domain
         public int Code { get; set; }
         public string Name { get; set; }
         public int? ParentCode { get; set; }
+        [ForeignKey("ParentCode")]
         public virtual EventType Parent { get; set; }
         public virtual ICollection<Event> Events { get; set; }
     }

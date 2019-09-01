@@ -32,6 +32,9 @@
                         <a class="nav-link" href="/">Головна</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/Articles/List">Довідник методів</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/Events/Add">Додати подію</a>
                     </li>
                     <li class="nav-item">
@@ -53,12 +56,12 @@
                 {
                     @*@:Ви увійшли як
                         <span class="span-bold ml-1">@HttpContext.Current.User.Identity.Name</span>*@
-                    <a href="/Account/Logoff/" class="btn btn-success ml-1">Вихід</a>
+                    <a href="/Account/Logoff/" class="btn btn-success ml-1 shadow-lg">Вихід</a>
                 }
                 else
                 {
-                    <a href="/Account/Login/" class="btn btn-success ml-1">Вхід</a>
-                    <a href="/Account/Register/" class="btn btn-success ml-1">Реєстрація</a>
+                    <a href="/Account/Login/" class="btn btn-success ml-1 shadow-lg">Вхід</a>
+                    <a href="/Account/Register/" class="btn btn-success ml-1 shadow-lg">Реєстрація</a>
                 }
 
 

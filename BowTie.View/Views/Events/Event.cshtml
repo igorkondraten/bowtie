@@ -20,19 +20,16 @@
         }
     </style>
 }
-<div class="container body-content">
+<div class="container-fluid body-content">
     <div class="inside-content">
         <h2>@ViewBag.Code @ViewBag.Name</h2>
         <h3>Список діаграм</h3>
-
-        <p>
-            <div class="form-row text-center">
-                <div class="col-12">
-                    <input type="button" class="btn btn-success" id="btnCreate" value="Створити нову" />
-                </div>
+        <div class="form-row text-center">
+            <div class="col-12">
+                <input type="button" class="btn btn-success" id="btnCreate" value="Створити нову" />
             </div>
-        </p>
-        <table class="table table-bordered">
+        </div>
+        <table class="mt-2 table table-bordered">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">
@@ -40,7 +37,7 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.EventName)
-                    </th>>
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Region)
                     </th>

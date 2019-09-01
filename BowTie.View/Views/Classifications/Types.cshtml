@@ -15,7 +15,7 @@
         });
     </script>
     <style>
-        h2, h4 {
+        h3, h4 {
             text-align: center;
         }
 
@@ -47,32 +47,32 @@
         .treeview > li > a {
             font-weight: bold;
         }
-
-        .treeview li {
+        
+        .treeview li a {
+            padding: 4px;
+            font-size: 14px;
+            display: inline-block;
+            text-decoration: none;
+            color: black;
+            width: auto;
         }
-
-            .treeview li a {
-                padding: 4px;
-                font-size: 14px;
-                display: inline-block;
-                text-decoration: none;
-                color: black;
-                width: auto;
-            }
     </style>
+
 }
-<div class="container body-content">
+<div class="container-fluid">
     <div class="inside-content">
-        <h2>Класифікатор надзвичайних ситуацій</h2>
+        <h3>Класифікатор надзвичайних ситуацій</h3>
         <h4><a href="http://zakon3.rada.gov.ua/rada/show/va457609-10">Згідно з національним класифікатором ДК 019:2010</a></h4>
-        <div style="border:solid 1px black; padding:10px; background-color:#FAFAFA">
-            <div class="treeview">
-                @if (Model != null && Model.Count() > 0)
-                {
-                    <ul>
-                        @TreeView.GetTreeView(Model, Model.FirstOrDefault().ParentId)
-                    </ul>
-                }
+        <div class="card">
+            <div class="card-body">
+                <div class="treeview">
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        <ul>
+                            @TreeView.GetTreeView(Model, Model.FirstOrDefault().ParentId)
+                        </ul>
+                    }
+                </div>
             </div>
         </div>
     </div>

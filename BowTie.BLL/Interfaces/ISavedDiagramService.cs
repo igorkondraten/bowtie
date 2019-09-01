@@ -8,7 +8,7 @@ namespace BowTie.BLL.Interfaces
     {
         IEnumerable<SavedDiagramDTO> GetAllSavedDiagramsForEvent(Guid eventId);
         SavedDiagramDTO GetSavedDiagram(int savedDiagramId);
-        int CreateDiagram(SavedDiagramDTO diagram);
+        int CreateSavedDiagram(SavedDiagramDTO diagram);
         void SetVerification(bool isVerified, int savedDiagramId);
     }
 }

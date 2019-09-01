@@ -2,7 +2,8 @@
 {
     public class Stats
     {
-        public string Name { get; set; }
+        public string EventTypeName { get; set; }
         public int Count { get; set; }
+        public string Region { get; set; }
     }
 }

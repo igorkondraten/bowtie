@@ -38,7 +38,7 @@ namespace BowTie.View.Controllers
             }
             return Ok(model);
         }
-
+        [Route("api/GetLastUpdateId/{savedDiagramId:int}")]
         [HttpGet]
         [ResponseType(typeof(DiagramUpdateViewModel))]
         public IHttpActionResult GetLastUpdateId(int savedDiagramId)

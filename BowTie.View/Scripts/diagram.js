@@ -10,226 +10,207 @@ window.onload = function init() {
     var yellowgrad = $(go.Brush, "Linear", { 0: "#FEC901", 1: "#FEA200" });
     var lavgrad = $(go.Brush, "Linear", { 0: "#EF9EFA", 1: "#A570AD" });
 
-    function initFishBone(){    
+    function initFishBone() {
         myDiagramFishBone =
-          $(go.Diagram, "myDiagramFishBone",  // refers to its DIV HTML element by id
-            {
-                initialContentAlignment: go.Spot.Center,  // center the content
-                "undoManager.isEnabled": true,  // enable undo & redo
-                "commandHandler.deletesTree": true
-                //isReadOnly: true
-            });
+            $(go.Diagram, "myDiagramFishBone",  // refers to its DIV HTML element by id
+                {
+                    initialContentAlignment: go.Spot.Center,  // center the content
+                    "undoManager.isEnabled": true,  // enable undo & redo
+                    "commandHandler.deletesTree": true
+                    //isReadOnly: true
+                });
 
         // Event template
         myDiagramFishBone.nodeTemplateMap.add("event",
             $(go.Node, "Auto",
-            { isShadowed: true, movable: false },
-            // define the node's outer shape
-            $(go.Shape, "RoundedRectangle",
-              { fill: yellowgrad, stroke: "#D8D8D8" }),
-            // define the node's text
-            $(go.TextBlock,
-            {
-                margin: 5,
-                overflow: go.TextBlock.OverflowEllipsis,
-                desiredSize: new go.Size(170, 70),
-                textAlign: "center",
-                verticalAlignment: go.Spot.Center,
-                editable: true,
-                maxLines: 3,
-                font: "bold 18px Helvetica, Arial, sans-serif"
-            },
-            new go.Binding("text").makeTwoWay()),
-              {
-                  contextMenu:
-                    $(go.Adornment, "Vertical",
-                      $("ContextMenuButton",
-                        $(go.TextBlock, "Add new"),
-                        { click: clickNewFishboneItem })
-                    )
-              },
-              { deletable: false }));
+                { isShadowed: true, movable: false },
+                // define the node's outer shape
+                $(go.Shape, "RoundedRectangle",
+                    { fill: yellowgrad, stroke: "#D8D8D8" }),
+                // define the node's text
+                $(go.TextBlock,
+                    {
+                        margin: 5,
+                        overflow: go.TextBlock.OverflowEllipsis,
+                        desiredSize: new go.Size(170, 70),
+                        textAlign: "center",
+                        verticalAlignment: go.Spot.Center,
+                        editable: true,
+                        maxLines: 3,
+                        font: "bold 18px Helvetica, Arial, sans-serif"
+                    },
+                    new go.Binding("text").makeTwoWay()),
+                {
+                    contextMenu:
+                        $(go.Adornment, "Vertical",
+                            $("ContextMenuButton",
+                                $(go.TextBlock, "Додати"),
+                                { click: clickNewFishboneItem })
+                        )
+                },
+                { deletable: false }));
 
         myDiagramFishBone.nodeTemplateMap.add("group",
             $(go.Node, "Auto",
-            { isShadowed: true, movable: false },
-            // define the node's outer shape
-            $(go.Shape, "RoundedRectangle",
-              { fill: bluegrad, stroke: "#D8D8D8" }),
-            // define the node's text
-            $(go.TextBlock,
-            {
-                margin: 5,
-                overflow: go.TextBlock.OverflowEllipsis,
-                desiredSize: new go.Size(150, 55),
-                textAlign: "center",
-                verticalAlignment: go.Spot.Center,
-                editable: true,
-                maxLines: 3,
-                font: "bold 16px Helvetica, Arial, sans-serif"
-            },
-            new go.Binding("text").makeTwoWay()),
-              {
-                  contextMenu:
-                    $(go.Adornment, "Vertical",
-                      $("ContextMenuButton",
-                        $(go.TextBlock, "Add new"),
-                        { click: clickNewFishboneItem })
-                    )
-              }));
+                { isShadowed: true, movable: false },
+                // define the node's outer shape
+                $(go.Shape, "RoundedRectangle",
+                    { fill: bluegrad, stroke: "#D8D8D8" }),
+                // define the node's text
+                $(go.TextBlock,
+                    {
+                        margin: 5,
+                        overflow: go.TextBlock.OverflowEllipsis,
+                        desiredSize: new go.Size(150, 55),
+                        textAlign: "center",
+                        verticalAlignment: go.Spot.Center,
+                        editable: true,
+                        maxLines: 3,
+                        font: "bold 16px Helvetica, Arial, sans-serif"
+                    },
+                    new go.Binding("text").makeTwoWay()),
+                {
+                    contextMenu:
+                        $(go.Adornment, "Vertical",
+                            $("ContextMenuButton",
+                                $(go.TextBlock, "Додати"),
+                                { click: clickNewFishboneItem })
+                        )
+                }));
 
         myDiagramFishBone.nodeTemplateMap.add("",
             $(go.Node, "Auto",
-            { isShadowed: false, movable: false },
-            // define the node's outer shape
-            $(go.Shape, "RoundedRectangle",
-              { fill: graygrad, stroke: "#D8D8D8" }),
-            // define the node's text
-            $(go.TextBlock,
-            {
-                margin: 5,
-                wrap: go.TextBlock.WrapFit,
-                textAlign: "center",
-                verticalAlignment: go.Spot.Center,
-                editable: true,
-                font: "15px Helvetica, Arial, sans-serif"
-            },
-            new go.Binding("text").makeTwoWay()),
-              {
-                  contextMenu:
-                    $(go.Adornment, "Vertical",
-                      $("ContextMenuButton",
-                        $(go.TextBlock, "Add new"),
-                        { click: clickNewFishboneItem })
-                    )
-              }));
+                { isShadowed: false, movable: false },
+                // define the node's outer shape
+                $(go.Shape, "RoundedRectangle",
+                    { fill: graygrad, stroke: "#D8D8D8" }),
+                // define the node's text
+                $(go.TextBlock,
+                    {
+                        margin: 5,
+                        wrap: go.TextBlock.WrapFit,
+                        textAlign: "center",
+                        verticalAlignment: go.Spot.Center,
+                        editable: true,
+                        font: "15px Helvetica, Arial, sans-serif"
+                    },
+                    new go.Binding("text").makeTwoWay()),
+                {
+                    contextMenu:
+                        $(go.Adornment, "Vertical",
+                            $("ContextMenuButton",
+                                $(go.TextBlock, "Додати"),
+                                { click: clickNewFishboneItem })
+                        )
+                }));
 
         myDiagramFishBone.linkTemplateMap.add("fishbone",
-          $(FishboneLink,  
-            $(go.Shape)
-          ));
+            $(FishboneLink,
+                $(go.Shape)
+            ));
 
-        // here is the structured data used to build the model
         var json =
-          {
-              "text": "Incorrect Deliveries", "size": 18, "weight": "Bold", "category": "event", "causes": [
-              {
-                  "text": "Skills", "size": 16, "weight": "Bold", "category": "group", "causes": [
-                  {
-                      "text": "knowledge", "weight": "Bold", "causes": [
-                      {
-                          "text": "procedures", "causes": [
-                          { "text": "documentation" }
-                          ]
-                      },
-                      { "text": "products" }
-                      ]
-                  },
-                  { "text": "literacy", "weight": "Bold" }
-                  ]
-              },
-              {
-                  "text": "Procedures", "size": 16, "weight": "Bold", "category": "group", "causes": [
-                  {
-                      "text": "manual", "weight": "Bold", "causes": [
-                      { "text": "consistency" }
-                      ]
-                  },
-                  {
-                      "text": "automated", "weight": "Bold", "causes": [
-                      { "text": "correctness" },
-                      { "text": "reliability" }
-                      ]
-                  }
-                  ]
-              },
-              {
-                  "text": "Communication", "size": 16, "weight": "Bold", "category": "group", "causes": [
-                  { "text": "ambiguity", "weight": "Bold" },
-                  {
-                      "text": "sales staff", "weight": "Bold", "causes": [
-                      {
-                          "text": "order details", "causes": [
-                          { "text": "lack of knowledge" }
-                          ]
-                      }
-                      ]
-                  },
-                  {
-                      "text": "telephone orders", "weight": "Bold", "causes": [
-                      { "text": "lack of information" }
-                      ]
-                  },
-                  {
-                      "text": "picking slips", "weight": "Bold", "causes": [
-                      { "text": "details" },
-                      { "text": "legibility" }
-                      ]
-                  }
-                  ]
-              },
-              {
-                  "text": "Transport", "size": 16, "weight": "Bold", "category": "group", "causes": [
-                  {
-                      "text": "information", "weight": "Bold", "causes": [
-                      { "text": "incorrect person" },
-                      {
-                          "text": "incorrect addresses", "causes": [
-                          {
-                              "text": "customer data base", "causes": [
-                              { "text": "not up-to-date" },
-                              { "text": "incorrect program" }
-                              ]
-                          }
-                          ]
-                      },
-                      { "text": "incorrect dept" }
-                      ]
-                  },
-                  {
-                      "text": "carriers", "weight": "Bold", "causes": [
-                      { "text": "efficiency" },
-                      { "text": "methods" }
-                      ]
-                  }
-                  ]
-              }
-              ]
-          };
-
-        function walkJson(obj, arr) {
-            var key = guid();
-            obj.key = key;
-            arr.push(obj);
-
-            var children = obj.causes;
-            if (children) {
-                for (var i = 0; i < children.length; i++) {
-                    var o = children[i];
-                    o.parent = key;  // reference to parent node data
-                    walkJson(o, arr);
+        {
+            "text": "Incorrect Deliveries", "size": 18, "weight": "Bold", "category": "event", "causes": [
+                {
+                    "text": "Skills", "size": 16, "weight": "Bold", "category": "group", "causes": [
+                        {
+                            "text": "knowledge", "weight": "Bold", "causes": [
+                                {
+                                    "text": "procedures", "causes": [
+                                        { "text": "documentation" }
+                                    ]
+                                },
+                                { "text": "products" }
+                            ]
+                        },
+                        { "text": "literacy", "weight": "Bold" }
+                    ]
+                },
+                {
+                    "text": "Procedures", "size": 16, "weight": "Bold", "category": "group", "causes": [
+                        {
+                            "text": "manual", "weight": "Bold", "causes": [
+                                { "text": "consistency" }
+                            ]
+                        },
+                        {
+                            "text": "automated", "weight": "Bold", "causes": [
+                                { "text": "correctness" },
+                                { "text": "reliability" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "text": "Communication", "size": 16, "weight": "Bold", "category": "group", "causes": [
+                        { "text": "ambiguity", "weight": "Bold" },
+                        {
+                            "text": "sales staff", "weight": "Bold", "causes": [
+                                {
+                                    "text": "order details", "causes": [
+                                        { "text": "lack of knowledge" }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "text": "telephone orders", "weight": "Bold", "causes": [
+                                { "text": "lack of information" }
+                            ]
+                        },
+                        {
+                            "text": "picking slips", "weight": "Bold", "causes": [
+                                { "text": "details" },
+                                { "text": "legibility" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "text": "Transport", "size": 16, "weight": "Bold", "category": "group", "causes": [
+                        {
+                            "text": "information", "weight": "Bold", "causes": [
+                                { "text": "incorrect person" },
+                                {
+                                    "text": "incorrect addresses", "causes": [
+                                        {
+                                            "text": "customer data base", "causes": [
+                                                { "text": "not up-to-date" },
+                                                { "text": "incorrect program" }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                { "text": "incorrect dept" }
+                            ]
+                        },
+                        {
+                            "text": "carriers", "weight": "Bold", "causes": [
+                                { "text": "efficiency" },
+                                { "text": "methods" }
+                            ]
+                        }
+                    ]
                 }
-            }
-        }
+            ]
+        };
 
-        // build the tree model
-        var nodeDataArray = [];
-        walkJson(json, nodeDataArray);
-        myDiagramFishBone.model = new go.TreeModel(nodeDataArray);
-
-        layoutFishbone();
+        jQuery.getJSON("/api/GetLastUpdateId/" + diagramFishboneId, {}, function (json) {
+            LoadDiagramFishBone(json.Id);
+        });
     }
 
     function initBowTie() {
         // Bow-Tie Section
         myDiagram = $(go.Diagram, "myDiagramBowTie",  // create a Diagram for the DIV HTML element
-                      {
-                          initialContentAlignment: go.Spot.Center,  // center the content
-                          "undoManager.isEnabled": true,  // enable undo & redo
-                          "animationManager.isEnabled": false,
-                          "SelectionDeleting": selectionDeleting,
-                          "SelectionDeleted": selectionDeleted
-                      });
+            {
+                initialContentAlignment: go.Spot.Center,  // center the content
+                "undoManager.isEnabled": true,  // enable undo & redo
+                "animationManager.isEnabled": false,
+                "SelectionDeleting": selectionDeleting,
+                "SelectionDeleted": selectionDeleted
+            });
 
         myDiagram.model = go.GraphObject.make(go.TreeModel,
             {
@@ -255,144 +236,144 @@ window.onload = function init() {
         // Event template
         myDiagram.nodeTemplateMap.add("e",
             $(go.Node, "Auto",
-            { isShadowed: true, movable: true },
-            // define the node's outer shape
-            $(go.Shape, "Ellipse",
-              { fill: yellowgrad, stroke: "#D8D8D8" }),
-            // define the node's text
-            $(go.TextBlock,
-              {
-                  margin: 5,
-                  font: "bold 13px Helvetica, Arial, sans-serif",
-                  desiredSize: new go.Size(100, 100),
-                  textAlign: "center",
-                  verticalAlignment: go.Spot.Center,
-                  overflow: go.TextBlock.OverflowEllipsis,
-                  maxLines: 15,
-                  editable: true
-              },
-              new go.Binding("text", "Name").makeTwoWay()),
-              {
-                  contextMenu:     // define a context menu for each node
-                    $(go.Adornment, "Vertical",
-                      $("ContextMenuButton",
-                        $(go.TextBlock, "Додати причину"),
-                        { click: clickNewHazard }),
-                      $("ContextMenuButton",
-                        $(go.TextBlock, "Додати наслідок"),
-                        { click: clickNewCons })
-                    )
-              }, { selectionAdorned: false, deletable: false })
-          );
+                { isShadowed: true, movable: true },
+                // define the node's outer shape
+                $(go.Shape, "Ellipse",
+                    { fill: yellowgrad, stroke: "#D8D8D8" }),
+                // define the node's text
+                $(go.TextBlock,
+                    {
+                        margin: 5,
+                        font: "bold 13px Helvetica, Arial, sans-serif",
+                        desiredSize: new go.Size(100, 100),
+                        textAlign: "center",
+                        verticalAlignment: go.Spot.Center,
+                        overflow: go.TextBlock.OverflowEllipsis,
+                        maxLines: 15,
+                        editable: true
+                    },
+                    new go.Binding("text", "Name").makeTwoWay()),
+                {
+                    contextMenu:     // define a context menu for each node
+                        $(go.Adornment, "Vertical",
+                            $("ContextMenuButton",
+                                $(go.TextBlock, "Додати причину"),
+                                { click: clickNewHazard }),
+                            $("ContextMenuButton",
+                                $(go.TextBlock, "Додати наслідок"),
+                                { click: clickNewCons })
+                        )
+                }, { selectionAdorned: false, deletable: false })
+        );
 
         // Consequences template
         myDiagram.nodeTemplateMap.add("c",
             $(go.Node, "Auto",
-            { isShadowed: true, movable: true },
-            // define the node's outer shape
-            $(go.Shape, "RoundedRectangle",
-              { fill: bluegrad, stroke: "#D8D8D8" }),
-            // define the node's text
-            $(go.TextBlock,
-              {
-                  margin: 5, font: "13px Helvetica, Arial, sans-serif",
-                  desiredSize: new go.Size(170, 100),
-                  textAlign: "center",
-                  verticalAlignment: go.Spot.Center,
-                  overflow: go.TextBlock.OverflowEllipsis,
-                  editable: true,
-                  maxLines: 15
-              },
-              new go.Binding("text", "Name").makeTwoWay()),
-              {
-                  contextMenu:     // define a context menu for each node
-                    $(go.Adornment, "Vertical",
-                      $("ContextMenuButton",
-                        $(go.TextBlock, "Додати новий бар'єр"),
-                        { click: clickNewBarrier }),
-                      $("ContextMenuButton",
-                        $(go.TextBlock, "Додати наслідок"),
-                        { click: clickNewSubCons })
-                    )
-              })
-          );
+                { isShadowed: true, movable: true },
+                // define the node's outer shape
+                $(go.Shape, "RoundedRectangle",
+                    { fill: bluegrad, stroke: "#D8D8D8" }),
+                // define the node's text
+                $(go.TextBlock,
+                    {
+                        margin: 5, font: "13px Helvetica, Arial, sans-serif",
+                        desiredSize: new go.Size(170, 100),
+                        textAlign: "center",
+                        verticalAlignment: go.Spot.Center,
+                        overflow: go.TextBlock.OverflowEllipsis,
+                        editable: true,
+                        maxLines: 15
+                    },
+                    new go.Binding("text", "Name").makeTwoWay()),
+                {
+                    contextMenu:     // define a context menu for each node
+                        $(go.Adornment, "Vertical",
+                            $("ContextMenuButton",
+                                $(go.TextBlock, "Додати новий бар'єр"),
+                                { click: clickNewBarrier }),
+                            $("ContextMenuButton",
+                                $(go.TextBlock, "Додати наслідок"),
+                                { click: clickNewSubCons })
+                        )
+                })
+        );
 
         // Subconsequences template
         myDiagram.nodeTemplateMap.add("sc",
             $(go.Node, "Auto",
-            { isShadowed: true, movable: true },
-            // define the node's outer shape
-            $(go.Shape, "RoundedRectangle",
-              { fill: bluegrad, stroke: "#D8D8D8" }),
-            // define the node's text
-            $(go.TextBlock,
-              {
-                  margin: 5, font: "13px Helvetica, Arial, sans-serif",
-                  desiredSize: new go.Size(150, 70),
-                  textAlign: "center",
-                  verticalAlignment: go.Spot.Center,
-                  overflow: go.TextBlock.OverflowEllipsis,
-                  editable: true,
-                  maxLines: 15
-              },
-              new go.Binding("text", "Name").makeTwoWay()))
-          );
+                { isShadowed: true, movable: true },
+                // define the node's outer shape
+                $(go.Shape, "RoundedRectangle",
+                    { fill: bluegrad, stroke: "#D8D8D8" }),
+                // define the node's text
+                $(go.TextBlock,
+                    {
+                        margin: 5, font: "13px Helvetica, Arial, sans-serif",
+                        desiredSize: new go.Size(150, 70),
+                        textAlign: "center",
+                        verticalAlignment: go.Spot.Center,
+                        overflow: go.TextBlock.OverflowEllipsis,
+                        editable: true,
+                        maxLines: 15
+                    },
+                    new go.Binding("text", "Name").makeTwoWay()))
+        );
 
         // Hazards template
         myDiagram.nodeTemplateMap.add("h",
             $(go.Node, "Auto",
-            { isShadowed: true, movable: true },
-            // define the node's outer shape
-            $(go.Shape, "RoundedRectangle",
-              { fill: lavgrad, stroke: "#D8D8D8" }),
-            // define the node's text
-            $(go.TextBlock,
-              {
-                  margin: 5, font: "13px Helvetica, Arial, sans-serif",
-                  desiredSize: new go.Size(170, 100),
-                  textAlign: "center",
-                  verticalAlignment: go.Spot.Center,
-                  editable: true,
-                  overflow: go.TextBlock.OverflowEllipsis,
-                  maxLines: 15
-              },
-              new go.Binding("text", "Name").makeTwoWay()),
-              {
-                  contextMenu:     // define a context menu for each node
-                    $(go.Adornment, "Vertical",
-                      $("ContextMenuButton",
-                        $(go.TextBlock, "Додати новий бар'єр"),
-                        { click: clickNewBarrier })
-                    )
-              }
-          ));
+                { isShadowed: true, movable: true },
+                // define the node's outer shape
+                $(go.Shape, "RoundedRectangle",
+                    { fill: lavgrad, stroke: "#D8D8D8" }),
+                // define the node's text
+                $(go.TextBlock,
+                    {
+                        margin: 5, font: "13px Helvetica, Arial, sans-serif",
+                        desiredSize: new go.Size(170, 100),
+                        textAlign: "center",
+                        verticalAlignment: go.Spot.Center,
+                        editable: true,
+                        overflow: go.TextBlock.OverflowEllipsis,
+                        maxLines: 15
+                    },
+                    new go.Binding("text", "Name").makeTwoWay()),
+                {
+                    contextMenu:     // define a context menu for each node
+                        $(go.Adornment, "Vertical",
+                            $("ContextMenuButton",
+                                $(go.TextBlock, "Додати новий бар'єр"),
+                                { click: clickNewBarrier })
+                        )
+                }
+            ));
 
         // Barriers template
         myDiagram.nodeTemplateMap.add("b",
             $(go.Node, "Auto",
-            { isShadowed: true, movable: true },
-            // define the node's outer shape
-            $(go.Shape, "RoundedRectangle",
-              { fill: "#9ACD32", stroke: "#D8D8D8" }),
-            // define the node's text
-            $(go.TextBlock,
-              {
-                  margin: 5, font: "13px Helvetica, Arial, sans-serif",
-                  desiredSize: new go.Size(80, 150),
-                  textAlign: "center",
-                  verticalAlignment: go.Spot.Center,
-                  overflow: go.TextBlock.OverflowEllipsis,
-                  editable: true,
-                  maxLines: 15
-              },
-              new go.Binding("text", "Name").makeTwoWay())
-          ));
+                { isShadowed: true, movable: true },
+                // define the node's outer shape
+                $(go.Shape, "RoundedRectangle",
+                    { fill: "#9ACD32", stroke: "#D8D8D8" }),
+                // define the node's text
+                $(go.TextBlock,
+                    {
+                        margin: 5, font: "13px Helvetica, Arial, sans-serif",
+                        desiredSize: new go.Size(80, 150),
+                        textAlign: "center",
+                        verticalAlignment: go.Spot.Center,
+                        overflow: go.TextBlock.OverflowEllipsis,
+                        editable: true,
+                        maxLines: 15
+                    },
+                    new go.Binding("text", "Name").makeTwoWay())
+            ));
 
         // Link styles
         myDiagram.linkTemplate =
-          $(go.Link,  // the whole link panel
-            { selectable: false },
-            new go.Binding("routing", "routing"),
+            $(go.Link,  // the whole link panel
+                { selectable: false },
+                new go.Binding("routing", "routing"),
                 $(go.Shape));  // the link shape
 
         jQuery.getJSON("/api/GetLastUpdateId/" + diagramBowTieId, {}, function (json) {
@@ -432,7 +413,7 @@ window.onload = function init() {
         if (n.data.type != "e") {
             deleteParentNodes(n.findTreeParentNode());
             myDiagram.remove(n);
-        }        
+        }
     }
 
     function selectionDeleted(e) {
@@ -470,14 +451,21 @@ window.onload = function init() {
         myDiagram.clear();
         myDiagram.model = go.Model.fromJson(json);
         myDiagram.add(
-        $(go.Part,
-        {
-            layerName: "Grid",
-            _viewPosition: new go.Point(2, 70)
-        },
-        $(go.Picture, "/Images/legend.png", { width: 85, height: 245 })
-        ));
+            $(go.Part,
+                {
+                    layerName: "Grid",
+                    _viewPosition: new go.Point(2, 70)
+                },
+                $(go.Picture, "/Images/legend.png", { width: 85, height: 245 })
+            ));
         doubleTreeLayout(myDiagram);
+    }
+
+    function ReloadDiagramFishBone() {
+        var json = myDiagramFishBone.model.toJson();
+        myDiagramFishBone.clear();
+        myDiagramFishBone.model = go.Model.fromJson(json);
+        layoutFishbone();
     }
 
     // Create new hazard
@@ -542,7 +530,7 @@ window.onload = function init() {
         myDiagramFishBone.startTransaction('addNewFishboneItem');
         var fromnode = obj.part.adornedPart;
         var newCons = {
-            text: 'New Item',
+            text: 'Назва',
             category: fromnode.data.category == "event" ? "group" : "",
             key: guid(),
             parent: fromnode.data.key
@@ -550,8 +538,7 @@ window.onload = function init() {
         myDiagramFishBone.model.addNodeData(newCons);
         myDiagramFishBone.commitTransaction('addNewFishboneItem');
     }
-    
-    // Load diagram model from server and apply it
+
     function LoadDiagram(n) {
         if (n == 0) {
             var t = {
@@ -568,36 +555,90 @@ window.onload = function init() {
             SaveDiagram();
         } else {
             jQuery.getJSON("/api/Saves/" + n, {}, function (json) {
-                myDiagram.model = go.Model.fromJson(json.Json);
+                myDiagram.model = go.Model.fromJson(json.JsonDiagram);
                 doubleTreeLayout(myDiagram);
             });
-        }          
-         myDiagram.add(
-        $(go.Part,
-          {
-              layerName: "Grid",
-              _viewPosition: new go.Point(2, 70)
-          },
-          $(go.Picture, "/Images/legend.png", { width: 85, height: 245 })
-          ));
-    }       
+        }
+        myDiagram.add(
+            $(go.Part,
+                {
+                    layerName: "Grid",
+                    _viewPosition: new go.Point(2, 70)
+                },
+                $(go.Picture, "/Images/legend.png", { width: 85, height: 245 })
+            ));
+    }
+
+    function LoadDiagramFishBone(n) {
+        var t;
+        if (n == 0) {
+            t = {
+                text: diagramName,
+                size: 18,
+                weight: "Bold",
+                category: "event"
+            };
+            var nodeDataArray = [];
+            walkJson(t, nodeDataArray);
+            myDiagramFishBone.model = new go.TreeModel(nodeDataArray);
+            //SaveDiagram();
+        } else {
+            jQuery.getJSON("/api/Saves/" + n, {}, function (json) {
+                myDiagramFishBone.model = go.Model.fromJson(json.JsonDiagram);
+            });
+        }
+        layoutFishbone();
+    }
+
+    function walkJson(obj, arr) {
+        var key = guid();
+        obj.key = key;
+        arr.push(obj);
+
+        var children = obj.causes;
+        if (children) {
+            for (var i = 0; i < children.length; i++) {
+                var o = children[i];
+                o.parent = key;  // reference to parent node data
+                walkJson(o, arr);
+            }
+        }
+    }
 
     // Export model in JSON
     function SaveDiagram() {
-        jQuery("[name='Json']").val(myDiagram.model.toJson());
+        jQuery("[name='JsonDiagram']").val(myDiagram.model.toJson());
+        jQuery("[name='SavedDiagramId']").val(diagramBowTieId);
     }
 
-    jQuery('#saveButton').click(function () {
+    function SaveDiagramFishBone() {
+        jQuery("[name='JsonDiagram']").val(myDiagramFishBone.model.toJson());
+        jQuery("[name='SavedDiagramId']").val(diagramFishboneId);
+    }
+
+    jQuery('#saveBowTie').click(function () {
         SaveDiagram();
     });
-    jQuery('.loadButton').click(function (e) {
+    jQuery('#saveFishBone').click(function () {
+        SaveDiagramFishBone();
+    });
+    jQuery('.bowTieLoad').click(function (e) {
         LoadDiagram(e.target.id);
+    });
+    jQuery('.fishBoneLoad').click(function (e) {
+        LoadDiagramFishBone(e.target.id);
     });
     jQuery('#refreshButton').click(function () {
         ReloadDiagram();
     });
+    jQuery('#refreshButtonFishBone').click(function () {
+        ReloadDiagramFishBone();
+    });
     jQuery('#downloadButton').click(function () {
         MakeImage();
+    });
+    jQuery('#downloadButtonFishBone').click(function () {
+        MakeImageFishBone();
     });
 
     // Generate PNG image
@@ -607,7 +648,16 @@ window.onload = function init() {
             background: "rgb(255, 255, 255)"
         });
         document.getElementById("downloadButton").href = img.src;
-        document.getElementById("downloadButton").download = diagramName;
+        document.getElementById("downloadButton").download = "BowTie - " + diagramName;
+    }
+
+    function MakeImageFishBone() {
+        var img = myDiagramFishBone.makeImage({
+            scale: 1,
+            background: "rgb(255, 255, 255)"
+        });
+        document.getElementById("downloadButtonFishBone").href = img.src;
+        document.getElementById("downloadButtonFishBone").download = "FishBone - " + diagramName;
     }
 }
 
@@ -615,11 +665,11 @@ window.onload = function init() {
 function guid() {
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1);
+            .toString(16)
+            .substring(1);
     }
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-      s4() + '-' + s4() + s4() + s4();
+        s4() + '-' + s4() + s4() + s4();
 }
 
 // Make double tree layout
@@ -637,42 +687,42 @@ function doubleTreeLayout(diagram) {
     // create and perform two TreeLayouts, one in each direction,
     // without moving the ROOT node, on the different subsets of nodes and links
     var layout1 =
-      $(go.TreeLayout,
-        {
-            angle: 180,
-            arrangement: go.TreeLayout.ArrangementFixedRoots,
-            setsPortSpot: false,
-            nodeSpacing: 10,
-            rowSpacing: 10,
-            layerSpacing: 20,
-            sorting: go.TreeLayout.SortingAscending,
-            comparer: function (va, vb) {
-                var da = va.node.data;
-                var db = vb.node.data;
-                if (da.num < db.num) return -1;
-                if (da.num > db.num) return 1;
-                return 0;
-            }
-        });
+        $(go.TreeLayout,
+            {
+                angle: 180,
+                arrangement: go.TreeLayout.ArrangementFixedRoots,
+                setsPortSpot: false,
+                nodeSpacing: 10,
+                rowSpacing: 10,
+                layerSpacing: 20,
+                sorting: go.TreeLayout.SortingAscending,
+                comparer: function (va, vb) {
+                    var da = va.node.data;
+                    var db = vb.node.data;
+                    if (da.num < db.num) return -1;
+                    if (da.num > db.num) return 1;
+                    return 0;
+                }
+            });
 
     var layout2 =
-      $(go.TreeLayout,
-        {
-            angle: 0,
-            arrangement: go.TreeLayout.ArrangementFixedRoots,
-            setsPortSpot: false,
-            nodeSpacing: 10,
-            rowSpacing: 10,
-            layerSpacing: 20,
-            sorting: go.TreeLayout.SortingAscending,
-            comparer: function(va, vb) {
-                var da = va.node.data;
-                var db = vb.node.data;
-                if (da.num < db.num) return -1;
-                if (da.num > db.num) return 1;
-                return 0;
-            }
-        });
+        $(go.TreeLayout,
+            {
+                angle: 0,
+                arrangement: go.TreeLayout.ArrangementFixedRoots,
+                setsPortSpot: false,
+                nodeSpacing: 10,
+                rowSpacing: 10,
+                layerSpacing: 20,
+                sorting: go.TreeLayout.SortingAscending,
+                comparer: function (va, vb) {
+                    var da = va.node.data;
+                    var db = vb.node.data;
+                    if (da.num < db.num) return -1;
+                    if (da.num > db.num) return 1;
+                    return 0;
+                }
+            });
 
     layout1.doLayout(leftParts);
     layout2.doLayout(rightParts);

@@ -92,6 +92,7 @@ namespace BowTie.BLL.Services
             if (oldEvent == null)
                 throw new ValidationException("Event not found.");
             Mapper.Map<EventDTO, Event>(newEvent, oldEvent);
+            db.Places.Update(oldEvent.Place);
             db.Events.Update(oldEvent);
             db.Save();
         }

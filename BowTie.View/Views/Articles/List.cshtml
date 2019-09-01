@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BowTie.View.Models.ArticleViewModel>
+@{
+    ViewBag.Title = "Довідник методів оцінювання ризиків";
+}
+@Styles.Render("~/Content/article_styles.css")
+@Styles.Render("~/Content/all.css")
+@Styles.Render("~/Content/bootstrap-treeview.min.css")
+@Scripts.Render("~/Scripts/bootstrap-treeview.min.js")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function getTree() {
+            var tree = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented));
+            return tree;
+        }
+
+        $('.article-nav').treeview({
+            data: getTree(),
+            expandIcon: "fas fa-plus",
+            collapseIcon: "fas fa-minus",
+            selectedBackColor: "#49872E"
+        });
+        $('.article-nav').on('nodeSelected', function(event, data) {
+            if (data.data) {
+                $('.article-content').html(data.data);
+            }
+        });
+    })
+</script>
+
+<div class="article-content">
+    <div class="mt-5" style="text-align: center;">
+        <h1>ДОВІДНИК МЕТОДІВ ОЦІНЮВАННЯ РИЗИКІВ</h1>
+        <img class="mt-3 mb-5" style="width: 50%; height: 50%" src="/Content/ArticleImages/titulka.png"/>
+        <p class="m-3" style="text-align: center; font-size: 1.3em;">← Оберіть розділ для перегляду</p>
+    </div>
+</div>
+<div class="article-nav">
+</div>

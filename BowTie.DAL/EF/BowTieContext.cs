@@ -11,6 +11,8 @@ namespace BowTie.DAL.EF
             Database.SetInitializer<BowTieContext>(new BowTieContextInitializer());
         }
 
+        public BowTieContext() { }
+
         public BowTieContext(string connectionString)
             : base(connectionString)
         { }

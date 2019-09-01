@@ -161,7 +161,7 @@ namespace BowTie.View.Controllers
                         Updates = x.Updates,
                         UserName = x.User.Name,
                         UserRole = x.User.Role.Name
-                    })
+                    }).OrderByDescending(x => x.Date)
                 }).ToList()
             };
             return View(model);
