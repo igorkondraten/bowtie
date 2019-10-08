@@ -1,6 +1,7 @@
-﻿@model IEnumerable<BowTie.View.Models.EventViewModel>
+﻿@using BowTie.BLL.Enums
+@model IEnumerable<BowTie.View.Models.EventViewModel>
 @{
-    ViewBag.Title = ViewBag.Name + " - список діаграм";
+    ViewBag.Title = ViewBag.Name + " - список подій";
     if (ViewBag.StartYear != null && ViewBag.EndYear != null)
     {
         ViewBag.Title += " за " + ViewBag.StartYear.ToString();
@@ -31,15 +32,15 @@
         <h3>
             @if (ViewBag.StartYear != null && ViewBag.EndYear != null)
             {
-                @:Список діаграм за @ViewBag.StartYear.ToString() - @ViewBag.EndYear.ToString() роки
+                @:Список подій за @ViewBag.StartYear.ToString() - @ViewBag.EndYear.ToString() роки
             }
             else
             {
-                @:Список діаграм
+                @:Список збережених подій
             }
         </h3>
 
-        <table class="table table-bordered">
+        <table class="table table-events table-bordered">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">
@@ -105,7 +106,7 @@
                             <input type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Events", new { id = item.Id })'" value="Редагувати" />
                         }
                         <input type="button" class="btn btn-info" onclick="location.href='@Url.Action("View", "Events", new { id = item.Id })'" value="Переглянути" />
-                        @if (User.IsInRole("Адміністратор"))
+                        @if (User.IsInRole(RolesEnum.Admin.GetName()))
                         {
                             <input type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "Events", new { id = item.Id })'" value="Видалити" />
                         }

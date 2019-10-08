@@ -51,6 +51,7 @@ namespace BowTie.BLL.Services
             if (savedDiagram == null)
                 throw new ValidationException("Diagram not found.");
             savedDiagram.ExpertCheck = isVerified;
+            savedDiagram.Date = DateTime.Now;
             db.SavedDiagrams.Update(savedDiagram);
             db.Save();
         }

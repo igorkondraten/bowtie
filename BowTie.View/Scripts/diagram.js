@@ -32,12 +32,12 @@ window.onload = function init() {
                     {
                         margin: 5,
                         overflow: go.TextBlock.OverflowEllipsis,
-                        desiredSize: new go.Size(170, 70),
+                        desiredSize: new go.Size(180, 80),
                         textAlign: "center",
                         verticalAlignment: go.Spot.Center,
                         editable: true,
                         maxLines: 3,
-                        font: "bold 18px Helvetica, Arial, sans-serif"
+                        font: "bold 15px Helvetica, Arial, sans-serif"
                     },
                     new go.Binding("text").makeTwoWay()),
                 {
@@ -66,7 +66,7 @@ window.onload = function init() {
                         verticalAlignment: go.Spot.Center,
                         editable: true,
                         maxLines: 3,
-                        font: "bold 16px Helvetica, Arial, sans-serif"
+                        font: "bold 15px Helvetica, Arial, sans-serif"
                     },
                     new go.Binding("text").makeTwoWay()),
                 {
@@ -108,93 +108,6 @@ window.onload = function init() {
             $(FishboneLink,
                 $(go.Shape)
             ));
-
-        var json =
-        {
-            "text": "Incorrect Deliveries", "size": 18, "weight": "Bold", "category": "event", "causes": [
-                {
-                    "text": "Skills", "size": 16, "weight": "Bold", "category": "group", "causes": [
-                        {
-                            "text": "knowledge", "weight": "Bold", "causes": [
-                                {
-                                    "text": "procedures", "causes": [
-                                        { "text": "documentation" }
-                                    ]
-                                },
-                                { "text": "products" }
-                            ]
-                        },
-                        { "text": "literacy", "weight": "Bold" }
-                    ]
-                },
-                {
-                    "text": "Procedures", "size": 16, "weight": "Bold", "category": "group", "causes": [
-                        {
-                            "text": "manual", "weight": "Bold", "causes": [
-                                { "text": "consistency" }
-                            ]
-                        },
-                        {
-                            "text": "automated", "weight": "Bold", "causes": [
-                                { "text": "correctness" },
-                                { "text": "reliability" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "text": "Communication", "size": 16, "weight": "Bold", "category": "group", "causes": [
-                        { "text": "ambiguity", "weight": "Bold" },
-                        {
-                            "text": "sales staff", "weight": "Bold", "causes": [
-                                {
-                                    "text": "order details", "causes": [
-                                        { "text": "lack of knowledge" }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "text": "telephone orders", "weight": "Bold", "causes": [
-                                { "text": "lack of information" }
-                            ]
-                        },
-                        {
-                            "text": "picking slips", "weight": "Bold", "causes": [
-                                { "text": "details" },
-                                { "text": "legibility" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "text": "Transport", "size": 16, "weight": "Bold", "category": "group", "causes": [
-                        {
-                            "text": "information", "weight": "Bold", "causes": [
-                                { "text": "incorrect person" },
-                                {
-                                    "text": "incorrect addresses", "causes": [
-                                        {
-                                            "text": "customer data base", "causes": [
-                                                { "text": "not up-to-date" },
-                                                { "text": "incorrect program" }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                { "text": "incorrect dept" }
-                            ]
-                        },
-                        {
-                            "text": "carriers", "weight": "Bold", "causes": [
-                                { "text": "efficiency" },
-                                { "text": "methods" }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        };
 
         jQuery.getJSON("/api/GetLastUpdateId/" + diagramFishboneId, {}, function (json) {
             LoadDiagramFishBone(json.Id);
@@ -542,7 +455,7 @@ window.onload = function init() {
     function LoadDiagram(n) {
         if (n == 0) {
             var t = {
-                Name: diagramName,
+                Name: diagramName.replace(/&quot;/g, '"'),
                 Id: rootNodeId,
                 ParentId: -1,
                 hazards: 0,
@@ -573,8 +486,8 @@ window.onload = function init() {
         var t;
         if (n == 0) {
             t = {
-                text: diagramName,
-                size: 18,
+                text: diagramName.replace(/&quot;/g, '"'),
+                size: 17,
                 weight: "Bold",
                 category: "event"
             };

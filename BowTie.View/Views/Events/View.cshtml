@@ -1,4 +1,5 @@
 ﻿@using BowTie.BLL.DTO
+@using BowTie.BLL.Enums
 @model BowTie.View.Models.EventViewModel
 
 @{
@@ -19,10 +20,10 @@
     </script>
 }
 <div class="container-fluid">
-    <div style="margin: 0 auto 0 auto; width: 70%;">
-        <table class="table table-bordered table1">
+    <div style="margin: 0 auto 0 auto;">
+        <table class="table table-bordered table1" style="width: 70%; min-width: 650px;">
             <thead class="thead-light">
-                <tr><th colspan="2">Інформація про подію</th></tr>
+                <tr><th colspan="2"><span class="text-uppercase">Інформація про подію</span></th></tr>
             </thead>
             <tr>
                 <th>
@@ -100,17 +101,45 @@
                     </td>
                 </tr>
             }
+            <tr>
+                <td colspan="2" class="center"><a class="btn btn-outline-success" href="/Default/Index" target="_blank">Переглянути процес аналізу ризиків з використанням діаграм Bow-Tie та Ісікави</a></td>
+            </tr>
         </table>
     </div>
     <div style="position: relative; margin-bottom: 10px; margin-top: 10px;">
         <ul class="list-group list-group-horizontal mb-0">
-            <li class="list-group-item flex-fill text-center"><h3 class="mt-2">Діаграма Bow-Tie</h3></li>
+            <li class="list-group-item flex-fill text-center"><h3 class="mt-2">Діаграма Bow-Tie
+                @if (@Model.SavedDiagrams[0].ExpertCheck)
+                {
+                    <i class="fas fa-check text-success" title="Діаграма перевірена експертом @Model.SavedDiagrams[0].Date"></i>
+                }
+            </h3></li>
             @if (Request.IsAuthenticated)
             {
                 <li class="list-group-item flex-fill text-center"><button type="button" id="saveBowTie" class="btn btn-success" data-toggle="modal" data-target="#saveModal">Зберегти до БД</button></li>
             }
             <li class="list-group-item flex-fill text-center"><input class="btn btn-success" id="refreshButton" type="button" value="Оновити" /></li>
             <li class="list-group-item flex-fill text-center"><a class="btn btn-success" id="downloadButton" href="#" download>Завантажити PNG</a></li>
+            @if (User.IsInRole(RolesEnum.Expert.GetName()) || User.IsInRole(RolesEnum.Admin.GetName()))
+            {
+                using (Html.BeginForm("Verify", "SavedDiagrams"))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="savedDiagramId" value="@Model.SavedDiagrams[0].Id" />
+
+
+                if (!Model.SavedDiagrams[0].ExpertCheck)
+                {
+                    <input type="hidden" name="isVerified" value="true" />
+                    <li class="list-group-item flex-fill text-center"><button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Перевірити</button></li>
+                }
+                else
+                {
+                    <input type="hidden" name="isVerified" value="false"/>
+                    <li class="list-group-item flex-fill text-center"><button type="submit" class="btn btn-danger"><i class="fas fa-times"></i> Скасувати перевірку</button></li>
+                }
+                }
+            }
             <li class="list-group-item flex-fill text-center"><a class="btn btn-success" data-toggle="collapse" href="#collapse1">Історія редагувань</a></li>
         </ul>
         <div id="collapse1" class="collapse">
@@ -123,13 +152,13 @@
                 {
                     <li class="list-group-item">
                         <button class="btn btn-success loadButton bowTieLoad" id="@save.Id" type="button">
-                            @if (save.UserRole == "Експерт")
+                            @if (save.UserRole == RolesEnum.Expert.GetName())
                             {
-                                <span class="glyphicon glyphicon-ok"></span>
+                                <i class="fas fa-check"></i>
                             }
                             Завантажити
                         </button>
-                        @if (User.IsInRole("Адміністратор"))
+                        @if (User.IsInRole(RolesEnum.Admin.GetName()))
                         {
                             using (Html.BeginForm("DeleteUpdate", "DiagramUpdates"))
                             {
@@ -147,13 +176,38 @@
         <div id="myDiagramBowTie" style="height: 92vh; width: auto; border: 1px solid;"></div>
 
         <ul class="list-group list-group-horizontal-sm mt-3">
-            <li class="list-group-item flex-fill text-center"><h3 class="mt-2">Діаграма Ісікави</h3></li>
+            <li class="list-group-item flex-fill text-center"><h3 class="mt-2">Діаграма Ісікави
+                @if (@Model.SavedDiagrams[1].ExpertCheck)
+                {
+                    <i class="fas fa-check text-success" title="Діаграма перевірена експертом @Model.SavedDiagrams[1].Date"></i>
+                }
+            </h3></li>
             @if (Request.IsAuthenticated)
             {
                 <li class="list-group-item flex-fill text-center"><button type="button" id="saveFishBone" class="btn btn-success" data-toggle="modal" data-target="#saveModal">Зберегти до БД</button></li>
             }
             <li class="list-group-item flex-fill text-center"><input class="btn btn-success" id="refreshButtonFishBone" type="button" value="Оновити" /></li>
             <li class="list-group-item flex-fill text-center"><a class="btn btn-success" id="downloadButtonFishBone" href="#" download>Завантажити PNG</a></li>
+            @if (User.IsInRole(RolesEnum.Expert.GetName()) || User.IsInRole(RolesEnum.Admin.GetName()))
+            {
+                using (Html.BeginForm("Verify", "SavedDiagrams"))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="savedDiagramId" value="@Model.SavedDiagrams[1].Id"/>
+
+
+                    if (!Model.SavedDiagrams[1].ExpertCheck)
+                    {
+                        <input type="hidden" name="isVerified" value="true"/>
+                        <li class="list-group-item flex-fill text-center"><button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Перевірити</button></li>
+                    }
+                    else
+                    {
+                        <input type="hidden" name="isVerified" value="false"/>
+                        <li class="list-group-item flex-fill text-center"><button type="submit" class="btn btn-danger"><i class="fas fa-times"></i> Скасувати перевірку</button></li>
+                    }
+                }
+            }
             <li class="list-group-item flex-fill text-center"><a class="btn btn-success" data-toggle="collapse" href="#collapse2">Історія редагувань</a></li>
         </ul>
         <div id="collapse2" class="collapse">
@@ -166,13 +220,13 @@
                 {
                     <li class="list-group-item">
                         <button class="btn btn-success loadButton fishBoneLoad" id="@save.Id" type="button">
-                            @if (save.UserRole == "Експерт")
+                            @if (save.UserRole == RolesEnum.Expert.GetName())
                             {
-                                <span class="glyphicon glyphicon-ok"></span>
+                                <i class="fas fa-check"></i>
                             }
                             Завантажити
                         </button>
-                        @if (User.IsInRole("Адміністратор"))
+                        @if (User.IsInRole(RolesEnum.Admin.GetName()))
                         {
                             using (Html.BeginForm("DeleteUpdate", "DiagramUpdates"))
                             {

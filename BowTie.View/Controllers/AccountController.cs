@@ -43,7 +43,7 @@ namespace BowTie.View.Controllers
                 return View(model);
             }
             FormsAuthentication.SetAuthCookie(model.Name, true);
-            return RedirectToAction("Index", "Default");
+            return RedirectToAction("List", "Articles");
         }
 
         public ActionResult Register()
@@ -80,13 +80,13 @@ namespace BowTie.View.Controllers
             if (_userService.RegisterUser(newUser) == 0)
                 return View(model);
             FormsAuthentication.SetAuthCookie(model.Name, true);
-            return RedirectToAction("Index", "Default");
+            return RedirectToAction("List", "Articles");
         }
 
         public ActionResult Logoff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Default");
+            return RedirectToAction("List", "Articles");
         }
     }
 }

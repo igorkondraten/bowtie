@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using BowTie.BLL.Enums
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -12,12 +13,13 @@
     @Styles.Render("~/Content/animate.min.css")
     @Styles.Render("~/Content/ken-burns.css")
     @Styles.Render("~/Content/smoothbox.css")
+    @Styles.Render("~/Content/all.css")
 
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
     @RenderSection("scripts", required: false)
 </head>
 <body>
-    <div style="min-height: 86vh;">
+    <div style="min-height: 91%;">
 
         <nav class="navbar navbar-expand-lg navbar-dark shadow" style="background-color: #49872E;">
             <a class="navbar-brand mb-0 h1" href="/">Risk analysis</a>
@@ -32,9 +34,6 @@
                         <a class="nav-link" href="/">Головна</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Articles/List">Довідник методів</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/Events/Add">Додати подію</a>
                     </li>
                     <li class="nav-item">
@@ -45,7 +44,7 @@
                     </li>
                     @if (Request.IsAuthenticated)
                     {
-                        if (User.IsInRole("Адміністратор"))
+                        if (User.IsInRole(RolesEnum.Admin.GetName()))
                         {
                             @:
                             <li class="nav-item"><a class="nav-link" href="/Admin/Users/">Редагування користувачів</a></li>
