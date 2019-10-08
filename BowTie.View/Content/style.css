@@ -50,7 +50,7 @@ th {
    white-space: pre-line;
 }
 
-.table > tbody > tr > td {
+.table-events > tbody > tr > td {
     text-align: center;
     vertical-align: middle;
 }
@@ -169,13 +169,13 @@ h4 {
 }
 
 .main-container-one p, .main-container-two p  {
-    text-align: center;
+    text-align: justify;
     font-size: 15px;
     font-family: 'Open Sans', sans-serif;
 }
 
 .main-container-two ol, .main-container-one ol {
-    text-align: center;
+    text-align: justify;
     list-style-position: inside;
     font-size: 15px;
     font-family: 'Open Sans', sans-serif;

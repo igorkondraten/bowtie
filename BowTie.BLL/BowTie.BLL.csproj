@@ -65,6 +65,7 @@
     <Compile Include="DTO\SavedDiagramDTO.cs" />
     <Compile Include="DTO\Stats.cs" />
     <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="Enums\RolesEnum.cs" />
     <Compile Include="Exceptions\ValidationException.cs" />
     <Compile Include="Infrastructure\AutoMapperConfiguration.cs" />
     <Compile Include="Infrastructure\NinjectBLLModule.cs" />

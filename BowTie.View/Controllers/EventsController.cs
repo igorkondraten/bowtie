@@ -148,7 +148,7 @@ namespace BowTie.View.Controllers
                 SavedDiagrams = ev.SavedDiagrams.Select(s => new SavedDiagramViewModel()
                 {
                     Date = s.Date.ToString(),
-                    ExpertCheck = s.ExpertCheck ? "Так" : "Ні",
+                    ExpertCheck = s.ExpertCheck,
                     Id = s.Id,
                     EventId = s.EventId,
                     DiagramType = s.DiagramType,
@@ -219,7 +219,7 @@ namespace BowTie.View.Controllers
         public ActionResult Delete(Guid id)
         {
             _eventService.DeleteEvent(id);
-            return RedirectToAction("Index", "Default");
+            return RedirectToAction("List", "Articles");
         }
 
         [Authorize]

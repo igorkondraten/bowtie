@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BowTie.View.Models.EventViewModel>
+﻿@using BowTie.BLL.Enums
+@model IEnumerable<BowTie.View.Models.EventViewModel>
 @{
     ViewBag.Title = ViewBag.Name + " - список діаграм";
 }
@@ -23,13 +24,13 @@
 <div class="container-fluid body-content">
     <div class="inside-content">
         <h2>@ViewBag.Code @ViewBag.Name</h2>
-        <h3>Список діаграм</h3>
+        <h3>Список збережених подій</h3>
         <div class="form-row text-center">
             <div class="col-12">
                 <input type="button" class="btn btn-success" id="btnCreate" value="Створити нову" />
             </div>
         </div>
-        <table class="mt-2 table table-bordered">
+        <table class="mt-2 table table-events table-bordered">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">
@@ -89,7 +90,7 @@
                             <input type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Events", new { id = item.Id })'" value="Редагувати" />
                         }
                         <input type="button" class="btn btn-info" onclick="location.href='@Url.Action("View", "Events", new { id = item.Id })'" value="Переглянути" />
-                        @if (User.IsInRole("Адміністратор"))
+                        @if (User.IsInRole(RolesEnum.Admin.GetName()))
                         {
                             <input type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "Events", new { id = item.Id })'" value="Видалити" />
                         }

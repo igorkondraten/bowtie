@@ -47,7 +47,7 @@
         .treeview > li > a {
             font-weight: bold;
         }
-        
+
         .treeview li a {
             padding: 4px;
             font-size: 14px;
@@ -60,19 +60,17 @@
 
 }
 <div class="container-fluid">
-    <div class="inside-content">
-        <h3>Класифікатор надзвичайних ситуацій</h3>
-        <h4><a href="http://zakon3.rada.gov.ua/rada/show/va457609-10">Згідно з національним класифікатором ДК 019:2010</a></h4>
-        <div class="card">
-            <div class="card-body">
-                <div class="treeview">
-                    @if (Model != null && Model.Count() > 0)
-                    {
-                        <ul>
-                            @TreeView.GetTreeView(Model, Model.FirstOrDefault().ParentId)
-                        </ul>
-                    }
-                </div>
+    <h3>Класифікатор надзвичайних ситуацій</h3>
+    <h4><a href="http://zakon3.rada.gov.ua/rada/show/va457609-10">Згідно з національним класифікатором ДК 019:2010</a></h4>
+    <div class="card">
+        <div class="card-body">
+            <div class="treeview">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    <ul>
+                        @TreeView.GetTreeView(Model, Model.FirstOrDefault().ParentId)
+                    </ul>
+                }
             </div>
         </div>
     </div>

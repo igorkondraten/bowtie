@@ -76,7 +76,7 @@
                 @foreach (var region in Model.Regions)
                 {
                     <th>
-                        @region.RegionName
+                        <span>@region.RegionName</span>                        
                     </th>
                 }
             </tr>
@@ -93,7 +93,7 @@
                     @foreach (var stat in m.Stats)
                     {
                         <td>
-                            @stat.Count
+                            <span>@stat.Count</span>
                         </td>
                     }
                 </tr>

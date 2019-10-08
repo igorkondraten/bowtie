@@ -12,7 +12,7 @@ namespace BowTie.View
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Articles", action = "List", id = UrlParameter.Optional }
             );
         }
     }
