@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BowTie.BLL.DTO;
 using BowTie.BLL.Interfaces;
@@ -8,7 +7,7 @@ using BowTie.DAL.Interfaces;
 
 namespace BowTie.BLL.Services
 {
-    public class StatsService : IDisposable, IStatsService
+    public class StatsService : IStatsService
     {
         private readonly IUnitOfWork db;
 
@@ -46,27 +45,5 @@ namespace BowTie.BLL.Services
                         .SelectMany(y => GetChildren(types, y.Code)));
             }
         }
-
-        #region IDisposable Support
-        private bool _isDisposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-
-                _isDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
     }
 }

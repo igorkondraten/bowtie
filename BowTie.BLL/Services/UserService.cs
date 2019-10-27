@@ -11,7 +11,7 @@ using BowTie.DAL.Interfaces;
 
 namespace BowTie.BLL.Services
 {
-    public class UserService : IUserService, IDisposable
+    public class UserService : IUserService
     {
         private readonly IUnitOfWork db;
 
@@ -29,8 +29,10 @@ namespace BowTie.BLL.Services
         public IEnumerable<string> GetRolesForUser(string username)
         {
             var user = db.Users.Find(x => x.Name == username).FirstOrDefault();
-            if (user?.Role == null)
-                throw new ValidationException("User or role not found.");
+            if (user == null)
+                throw new ValidationException("User not found.");
+            if (user.Role == null)
+                throw new ValidationException("Role not found.");
             yield return user.Role.Name;
         }
 
@@ -91,27 +93,5 @@ namespace BowTie.BLL.Services
                 throw new ValidationException("User not found.");
             return Mapper.Map<User, UserDTO>(user);
         }
-
-        #region IDisposable Support
-        private bool _isDisposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-
-                _isDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
     }
 }

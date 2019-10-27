@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using BowTie.BLL.DTO;
-
-namespace BowTie.BLL.Interfaces
+﻿namespace BowTie.BLL.Interfaces
 {
-    public interface ISavedDiagramService : IDisposable
+    public interface ISavedDiagramService
     {
-        IEnumerable<SavedDiagramDTO> GetAllSavedDiagramsForEvent(Guid eventId);
-        SavedDiagramDTO GetSavedDiagram(int savedDiagramId);
-        int CreateSavedDiagram(SavedDiagramDTO diagram);
         void SetVerification(bool isVerified, int savedDiagramId);
     }
 }

@@ -10,7 +10,7 @@ using BowTie.DAL.Interfaces;
 
 namespace BowTie.BLL.Services
 {
-    public class DiagramUpdateService : IDisposable, IDiagramUpdateService
+    public class DiagramUpdateService : IDiagramUpdateService
     {
         private readonly IUnitOfWork db;
 
@@ -51,27 +51,5 @@ namespace BowTie.BLL.Services
                 throw new ValidationException("Diagram update not found.");
             return Mapper.Map<DiagramUpdate, DiagramUpdateDTO>(diagramUpdate);
         }
-
-        #region IDisposable Support
-        private bool _isDisposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-
-                _isDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
     }
 }

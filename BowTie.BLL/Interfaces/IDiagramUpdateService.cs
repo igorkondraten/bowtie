@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BowTie.BLL.DTO;
 
 namespace BowTie.BLL.Interfaces
 {
-    public interface IDiagramUpdateService : IDisposable
+    public interface IDiagramUpdateService
     {
         void DeleteDiagramUpdate(int id);
         DiagramUpdateDTO CreateDiagramUpdate(DiagramUpdateDTO diagramUpdate);

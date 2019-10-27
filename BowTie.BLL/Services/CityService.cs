@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using BowTie.BLL.DTO;
@@ -9,7 +8,7 @@ using BowTie.DAL.Interfaces;
 
 namespace BowTie.BLL.Services
 {
-    public class CityService : IDisposable, ICityService
+    public class CityService : ICityService
     {
         private readonly IUnitOfWork db;
 
@@ -22,28 +21,5 @@ namespace BowTie.BLL.Services
         {
             return db.Cities.Find(x => x.DistrictId == districtId).Select(x => Mapper.Map<City, CityDTO>(x));
         }
-
-        #region IDisposable Support
-        private bool _isDisposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-
-                _isDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
-        #endregion
     }
 }

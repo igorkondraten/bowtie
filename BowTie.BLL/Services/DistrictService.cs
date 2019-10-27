@@ -9,7 +9,7 @@ using BowTie.DAL.Interfaces;
 
 namespace BowTie.BLL.Services
 {
-    public class DistrictService : IDisposable, IDistrictService
+    public class DistrictService : IDistrictService
     {
         private readonly IUnitOfWork db;
 
@@ -22,27 +22,5 @@ namespace BowTie.BLL.Services
         {
             return db.Districts.Find(x => x.RegionId == regionId).Select(x => Mapper.Map<District, DistrictDTO>(x));
         }
-
-        #region IDisposable Support
-        private bool _isDisposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-
-                _isDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
     }
 }

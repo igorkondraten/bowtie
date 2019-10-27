@@ -10,7 +10,7 @@ using BowTie.DAL.Interfaces;
 
 namespace BowTie.BLL.Services
 {
-    public class EventTypeService : IDisposable, IEventTypeService
+    public class EventTypeService : IEventTypeService
     {
         private readonly IUnitOfWork db;
 
@@ -55,27 +55,5 @@ namespace BowTie.BLL.Services
                 throw new ValidationException("Event type not found.");
             return Mapper.Map<EventType, EventTypeDTO>(eventType);
         }
-
-        #region IDisposable Support
-        private bool _isDisposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-
-                _isDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
     }
 }

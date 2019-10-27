@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using BowTie.BLL.DTO;
@@ -10,7 +9,7 @@ using BowTie.DAL.Interfaces;
 
 namespace BowTie.BLL.Services
 {
-    public class RegionService : IDisposable, IRegionService
+    public class RegionService : IRegionService
     {
         private readonly IUnitOfWork db;
 
@@ -48,28 +47,5 @@ namespace BowTie.BLL.Services
             }
             return regions;
         }
-
-        #region IDisposable Support
-        private bool _isDisposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-
-                _isDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        
-        #endregion
     }
 }

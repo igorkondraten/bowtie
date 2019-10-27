@@ -11,7 +11,7 @@ using DiagramType = BowTie.DAL.Domain.DiagramType;
 
 namespace BowTie.BLL.Services
 {
-    public class EventService : IDisposable, IEventService
+    public class EventService : IEventService
     {
         private readonly IUnitOfWork db;
 
@@ -77,6 +77,7 @@ namespace BowTie.BLL.Services
                 ExpertCheck = false,
                 DiagramType = DiagramType.Fishbone
             };
+            createdEvent.SavedDiagrams = new List<SavedDiagram>();
             db.SavedDiagrams.Create(savedDiagramBowTie);
             db.SavedDiagrams.Create(savedDiagramFishBone);
             createdEvent.SavedDiagrams.Add(savedDiagramBowTie);
@@ -112,28 +113,5 @@ namespace BowTie.BLL.Services
             db.Events.Delete(eventId);
             db.Save();
         }
-
-        #region IDisposable Support
-        private bool _isDisposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-
-                _isDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
-        #endregion
     }
 }
